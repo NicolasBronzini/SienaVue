@@ -18,15 +18,20 @@
                     return {
                     selectedOption: '',
                     options: [
-                        { text: 'Caratulacion', value: 'Caratulacion' },
-                        { text: 'Firma', value: 'Firma' },
-                        { text: 'Vinculacion', value: 'Vinculacion' },
-                        { text: 'Pase', value: 'Pase' }
+                        { text: 'Caratulacion', value: 'AltaCaratulacion' },
+                        { text: 'Firma', value: 'AltaFirma' },
+                        { text: 'Pase', value: 'AltaPase' },
+                        { text: 'Vinculacion', value: 'AltaVinculacion' },
                     ]
                     }
-                }
-
-            }   
+                },
+                methods: {
+                    showComponent() {
+                    
+                    }
+                } 
+                  
+            }
             
              
             </script>
@@ -49,7 +54,7 @@
                     </div>
                     <div class="btn_Filtros">
                         <button id="btn_filtrado" class="btn btn-secondary">Filtrar</button>
-                        <button id="btn_Alta" class="btn btn-success" @click="showSelectedOption">Alta</button>
+                        <button id="btn_Alta" class="btn btn-success" >Alta</button>
                     </div>
                 </div>
                 <hr style="width: 95%; margin:auto;">
@@ -59,7 +64,8 @@
                         <!-- Tipo de proceso -->
                         <div class="btn-group" role="group" style="margin:0px 20px ;" >
                             <label for="">Tipo Proceso: ></label>
-                            <select name="cbxProceso" id="cbxProceso" v-model="selectedOption">
+                            <select name="cbxProceso" id="cbxProceso"  >
+                               
                                 <option v-for="option in options" v-bind:key="option.value">
                                     {{ option.text }}
                                 </option>
@@ -112,10 +118,10 @@
         </div>
 
         <div>
-            <AltaCaratulacion v-if="selectedOption === 'Caratulacion'" is="Caratulacion"></AltaCaratulacion>
-            <AltaFirma v-if="selectedOption === 'Firma'" is="Firma"></AltaFirma>
-           <AltaPase v-if="selectedOption === 'Pase'" is="Pase"></AltaPase>
-            <AltaVinculacion v-if="selectedOption === 'Vinculacion'" is="Vinculacion"></AltaVinculacion> 
+            <AltaCaratulacion  v-if="selectedOption === 'AltaCaratulacion'" is="Caratulacion"></AltaCaratulacion>
+            <AltaFirma  v-if="selectedOption === 'AltaFirma'" is="Firma"></AltaFirma>
+           <AltaPase  v-if="selectedOption === 'AltaPase'" is="Pase"></AltaPase>
+            <AltaVinculacion  v-if="selectedOption === 'AltaVinculacion'" is="Vinculacion"></AltaVinculacion> 
         </div>
     </div>
 </template>
