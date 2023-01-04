@@ -14,7 +14,7 @@
                 <p>Tipo Proceso <span> <strong> Firma</strong></span> </p>
             </div>
             <!-- inputs de seleccion de referencia para generar expediente -->
-            <div class="container_Inputs_Entrada_Data_Firmante">
+            <div class="container_Inputs_Entrada_Data_Caratulacion">
                 <!-- Input Referencia -->
                <div class="div_Inputs_Entrada_Data_Caratulacion form-control">
                   <p>Referencia</p>
@@ -48,15 +48,15 @@
             <div class="container_Permite_Asociacion_Caratulacion container_Permite_Asociacion_Caratulacion2">
                 <div class="div_Permite_Asociacion_Caratulacion2 " >
                     <p>¿Trata Única?</p>
-                    <button class="Swich_Asociacion" id="switchTrataUnicaCaratulacion" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchTrataUnicaCaratulacion" @click="toggleClassTrataUnica" v-bind:class="addedClassTrataUnica" ><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Caratulacion2">
                     <p>¿Asocia Expediente?</p>
-                    <button class="Swich_Asociacion" id="switchAsociaExpedienteCaratulacion" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociaExpedienteCaratulacion" @click="toggleClassAsociaExpediente" v-bind:class="addedClassAsociaExpediente" ><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Caratulacion2">
                     <p>¿Requiere Asociación SIENA?</p>
-                    <button class="Swich_Asociacion" id="switchAsociacionSIENACaratulacion" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociacionSIENACaratulacion" @click="toggleClassAsociaSiena" v-bind:class="addedClassAsociaSiena"><span >No</span><span >Si</span></button>
                 </div>
                 
             </div>
@@ -77,7 +77,7 @@
                 <div class="div_Permite_Asociacion_Caratulacion2">
                     <p>¿Motivo Interno y Descripción <br>
                         Adicional del tramite coinciden ?</p>
-                    <button class="Swich_Asociacion" id="switchMotivoInternoEECaratulacion" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchMotivoInternoEECaratulacion" @click="toggleClassMotivoInterno" v-bind:class="addedClassMotivoInterno" ><span >No</span><span >Si</span></button>
                 </div>
                 
             </div>
@@ -109,8 +109,31 @@
   <script>
   export default {
     name: 'AltaCaratulacion',
-    
-  }
+            data() {
+            return {
+               addedClassTrataUnica: '',
+               addedClassAsociaExpediente: '',
+               addedClassAsociaSiena:'',
+              addedClassMotivoInterno:'',
+
+            }
+         },
+         methods: {
+            toggleClassTrataUnica() {
+               this.addedClassTrataUnica = this.addedClassTrataUnica === 'active' ? '' : 'active'
+            },
+            toggleClassAsociaExpediente(){
+               this.addedClassAsociaExpediente = this.addedClassAsociaExpediente === 'active' ? '' : 'active'
+            },
+            toggleClassAsociaSiena(){
+               this.addedClassAsociaSiena = this.addedClassAsociaSiena === 'active' ? '' : 'active'
+            },
+            toggleClassMotivoInterno(){
+               this.addedClassMotivoInterno = this.addedClassMotivoInterno === 'active' ? '' : 'active'
+             }
+            
+         }
+      }
   
 
   </script>
@@ -147,11 +170,12 @@
 /* inputs y buttons referencias y datos de nuevo expediente */
 .container_Inputs_Entrada_Data_Caratulacion{
    display: flex !important;
-   justify-content: space-around;
+
    margin: auto;  
 }
 .div_Inputs_Entrada_Data_Caratulacion{
-   width: 32.6%;
+   
+   width: 30%;
   margin: 0 20px 0 30px;
 }
 .div_Inputs_Entrada_Data_Caratulacion p{
@@ -378,6 +402,18 @@
 }
 
 
+
+/* Asocia Motivo Interno  Caratulacion */
+#switchMotivoInternoEECaratulacion::after{
+   top: 0;
+  right: 0;
+  left: unset;
+}
+#switchMotivoInternoEECaratulacion.active::after{
+   right: unset;
+   left: 0;
+   content: "No";
+}
 
 
 

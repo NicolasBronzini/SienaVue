@@ -68,11 +68,11 @@
                 </div>
                 <div class="div_Permite_Asociacion_Firma2 btn_Unico_Item ">
                     <p>¿Asocia a único item?</p>
-                    <button class="Swich_Item_Unico" id="SwichItemUnico"><span >No</span><span >Si</span></button>
+                    <button class="Swich_Item_Unico" id="SwichItemUnico" ><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Firma2">
                     <p>¿Permite Asociación?</p>
-                    <button class="Swich_Asociacion" id="SwichAsociacion" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="SwichAsociacion"  ><span >No</span><span >Si</span></button>
                 </div>
             </div>
             <!-- Tipo de docuemento SIENA -->
@@ -117,9 +117,33 @@
   <script>
   export default {
     name: 'AltaFirma',
-   
+    //@click="toggleClassAsociacionFirma" v-bind:class="addedClassAsociacionFirma" 
+    data() {
+            return {
+                //addedClassAsociacionFirma: '',
+            //    addedClassAsociaExpediente: '',
+            //    addedClassAsociaSiena:'',
+            //   addedClassMotivoInterno:'',
+
+            }
+         },
+         methods: {
+            // toggleClassAsociacionFirma() {
+            //     this.addedClassAsociacionFirma = this.addedClassAsociacionFirma === 'active' ? '' : 'active'
+            //  },
+            // toggleClassAsociaExpediente(){
+            //    this.addedClassAsociaExpediente = this.addedClassAsociaExpediente === 'active' ? '' : 'active'
+            // },
+            // toggleClassAsociaSiena(){
+            //    this.addedClassAsociaSiena = this.addedClassAsociaSiena === 'active' ? '' : 'active'
+            // },
+            // toggleClassMotivoInterno(){
+            //    this.addedClassMotivoInterno = this.addedClassMotivoInterno === 'active' ? '' : 'active'
+            //  }
+            
+         }
   }
-//   switch
+
  
 
 

@@ -1,3 +1,35 @@
+            <script>
+            
+            import AltaCaratulacion from '../Altas/AltaCaratulacion.vue'
+             import AltaFirma from '../Altas/AltaFirma.vue'
+             import AltaPase from '../Altas/AltaPase.vue'
+             import AltaVinculacion from '../Altas/AltaVinculacion.vue'
+            
+            
+            export default {
+              name: 'MainGDE',
+              components: {
+                AltaCaratulacion,
+                  AltaFirma,
+                 AltaPase,
+               AltaVinculacion,   
+                  } ,
+                  data() {
+                    return {
+                    selectedOption: '',
+                    options: [
+                        { text: 'Caratulacion', value: 'Caratulacion' },
+                        { text: 'Firma', value: 'Firma' },
+                        { text: 'Vinculacion', value: 'Vinculacion' },
+                        { text: 'Pase', value: 'Pase' }
+                    ]
+                    }
+                }
+
+            }   
+            
+             
+            </script>
 
 <template>
     <div>
@@ -17,7 +49,7 @@
                     </div>
                     <div class="btn_Filtros">
                         <button id="btn_filtrado" class="btn btn-secondary">Filtrar</button>
-                        <button id="btn_Alta" class="btn btn-success">Alta</button>
+                        <button id="btn_Alta" class="btn btn-success" @click="showSelectedOption">Alta</button>
                     </div>
                 </div>
                 <hr style="width: 95%; margin:auto;">
@@ -25,15 +57,12 @@
                 <div class="container_SeteoFiltros">
                     <div class="Filtro_masivo">
                         <!-- Tipo de proceso -->
-                        <div class="btn-group" role="group" style="margin:0px 20px ;">
+                        <div class="btn-group" role="group" style="margin:0px 20px ;" >
                             <label for="">Tipo Proceso: ></label>
                             <select name="cbxProceso" id="cbxProceso" v-model="selectedOption">
-                                <option selected>Seleccionar...</option>
-                                <option value="caratulacion">Caratulacion EE</option>
-                                <option  value="firma">Firma</option>
-                                <option value="pase">Pase EE</option>
-                                <option  value="vinculacion">Vinculación EE</option>
-                               
+                                <option v-for="option in options" v-bind:key="option.value">
+                                    {{ option.text }}
+                                </option>
                             </select>
                           </div>
                           <!-- Estado del proceso -->
@@ -83,34 +112,14 @@
         </div>
 
         <div>
-            <AltaCaratulacion v-if="selectedOption === 'caratulacion'"></AltaCaratulacion>
-            <AltaFirma v-if="selectedOption === 'firma'"></AltaFirma>
-           <AltaPase v-if="selectedOption === 'pase'"></AltaPase>
-            <AltaVinculacion v-if="selectedOption === 'vinculacion'"></AltaVinculacion>  
+            <AltaCaratulacion v-if="selectedOption === 'Caratulacion'" is="Caratulacion"></AltaCaratulacion>
+            <AltaFirma v-if="selectedOption === 'Firma'" is="Firma"></AltaFirma>
+           <AltaPase v-if="selectedOption === 'Pase'" is="Pase"></AltaPase>
+            <AltaVinculacion v-if="selectedOption === 'Vinculacion'" is="Vinculacion"></AltaVinculacion> 
         </div>
     </div>
 </template>
 
-<script>
-
-import AltaCaratulacion from '../Altas/AltaCaratulacion.vue'
- import AltaFirma from '../Altas/AltaFirma.vue'
- import AltaPase from '../Altas/AltaPase.vue'
- import AltaVinculacion from '../Altas/AltaVinculacion.vue'
-
-
-export default {
-  name: 'MainGDE',
-  components: {
-    AltaCaratulacion,
-      AltaFirma,
-     AltaPase,
-   AltaVinculacion,   
-      }     
-}
-
- 
-</script>
 
 <style lang="css" scoped>
 
