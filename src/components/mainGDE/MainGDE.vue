@@ -15,21 +15,11 @@
                AltaVinculacion,   
                   } ,
                   data() {
-                    return {
+                return {
                     selectedOption: '',
-                    options: [
-                        { text: 'Caratulacion', value: 'AltaCaratulacion' },
-                        { text: 'Firma', value: 'AltaFirma' },
-                        { text: 'Pase', value: 'AltaPase' },
-                        { text: 'Vinculacion', value: 'AltaVinculacion' },
-                    ]
-                    }
+                    showComponent: false,
+                }
                 },
-                methods: {
-                    showComponent() {
-                    
-                    }
-                } 
                   
             }
             
@@ -54,7 +44,7 @@
                     </div>
                     <div class="btn_Filtros">
                         <button id="btn_filtrado" class="btn btn-secondary">Filtrar</button>
-                        <button id="btn_Alta" class="btn btn-success" >Alta</button>
+                        <button id="btn_Alta" class="btn btn-success" v-bind:showComponent="showComponent" @click="showComponent = !showComponent">Alta</button>
                     </div>
                 </div>
                 <hr style="width: 95%; margin:auto;">
@@ -64,12 +54,14 @@
                         <!-- Tipo de proceso -->
                         <div class="btn-group" role="group" style="margin:0px 20px ;" >
                             <label for="">Tipo Proceso: ></label>
-                            <select name="cbxProceso" id="cbxProceso"  >
+                            <select name="cbxProceso" id="cbxProceso"  v-model="selectedOption">
                                
-                                <option v-for="option in options" v-bind:key="option.value">
-                                    {{ option.text }}
-                                </option>
-                            </select>
+                                <option value="">Seleccionar...</option>
+                                <option value="Caratulacion">Caratulacion EE</option>
+                                <option value="Firma">Firma</option>
+                                <option value="Pase">Pase EE</option>
+                                <option value="Vinculacion">Vinculacion EE</option>
+                           </select>
                           </div>
                           <!-- Estado del proceso -->
                           <div class="btn-group" role="group" style="margin:0px 20px ;">
@@ -118,10 +110,10 @@
         </div>
 
         <div>
-            <AltaCaratulacion  v-if="selectedOption === 'AltaCaratulacion'" is="Caratulacion"></AltaCaratulacion>
-            <AltaFirma  v-if="selectedOption === 'AltaFirma'" is="Firma"></AltaFirma>
-           <AltaPase  v-if="selectedOption === 'AltaPase'" is="Pase"></AltaPase>
-            <AltaVinculacion  v-if="selectedOption === 'AltaVinculacion'" is="Vinculacion"></AltaVinculacion> 
+            <AltaCaratulacion  v-if="showComponent && selectedOption === 'Caratulacion'"></AltaCaratulacion>
+            <AltaFirma  v-if="showComponent && selectedOption === 'Firma'"></AltaFirma>
+           <AltaPase  v-if="showComponent && selectedOption === 'Pase'"></AltaPase>
+            <AltaVinculacion  v-if="showComponent && selectedOption === 'Vinculacion'"></AltaVinculacion> 
         </div>
     </div>
 </template>
