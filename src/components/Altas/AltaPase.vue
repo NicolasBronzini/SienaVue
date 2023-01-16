@@ -19,17 +19,14 @@
                         <!-- Input Referencia -->
                 <div class="div_Inputs_Entrada_Data_Pase Inputs_btnAsocia_Unico_Item animate__animated form-control">
                    <p>Referencia</p>
-                    <input type="text" class="grupo_Entrada_Data_Pase" required style="width: 100%; height: 40px;"/>
+                    <input type="text" class="grupo_Entrada_Data_Pase" required style="width: 100%; height: 40px;"  v-model="referenciaPase"/>
                 </div>
                         <!-- Firmante -->
                 <div class="div_Inputs_Entrada_Data_Pase Inputs_btnAsocia_Unico_Item animate__animated form-control">
                     <p> Firmante</p>
                     <div class=" grupo_Entrada_Data_Pase" role="group">
-                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;">
-                            <!-- Chequear su existencia en GDE. Selección única -->
-                            <option class="Seleccionar_Option" selected>Seleccionar</option>
-                            <option>nombre de firmante</option>
-                          </select>
+                     <input type="text"  style="width: 100%; height: 40px;" id="firmante_alta_proceso_masivo_Pase" v-model="firmantePase" />
+                    
                     </div>
                 </div>
                
@@ -40,15 +37,15 @@
             <div class="container_Permite_Asociacion_Pase container_Permite_Asociacion_Pase2">
                 <div class="div_Permite_Asociacion_Pase2">
                     <p>¿El destino de los EE es único?</p>
-                    <button class="Swich_Asociacion" id="switchDestinoUnicoPase" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchDestinoUnicoPase" @click="toggleClassDestinoUnicoPase" v-bind:class="addedClassDestinoUnicoPase"><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Pase2">
                     <p>¿Asocia Expediente?</p>
-                    <button class="Swich_Asociacion" id="switchAsociaExpedientePase" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociaExpedientePase" @click="toggleClassAsociacionExpedientePase" v-bind:class="addedClassAsociacionExpedientePase"><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Pase2">
                     <p>¿Requiere Asociación SIENA?</p>
-                    <button class="Swich_Asociacion" id="switchAsociacionSIENA" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociacionSIENA"  @click="toggleClassAsociacionSienaPase" v-bind:class="addedClassAsociacionSienaPase"><span >No</span><span >Si</span></button>
                 </div>
                 
             </div>
@@ -66,11 +63,11 @@
                </div>
                 <div class="div_Permite_Asociacion_Pase2">
                     <p><strong> ¿Asocia a un unico EE?</strong></p>
-                    <button class="Swich_Asociacion" id="switchAsociaUnicoEEPase" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociaUnicoEEPase"  @click="toggleClassAsociacionUnicaEEPase" v-bind:class="addedClassAsociacionUnicaEEPase"><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Pase2">
                     <p>¿Asocia a un unico Item?</p>
-                    <button class="Swich_Asociacion" id="switchAsociaUnicoEEPase2" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchAsociaUnicoEEPase2" @click="toggleClassAsociacionUnicoItemPase" v-bind:class="addedClassAsociacionUnicoItemPase"><span >No</span><span >Si</span></button>
                 </div>
                 
             </div>
@@ -110,7 +107,16 @@
                     </div>
                 </div>
             </div>
-           
+             <!-- Apartado cruadricula Caratulacion -->
+             <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;">
+                <table >
+                    <tr v-for="(value, key) in localStorageData" :key="key" >
+                        <td id="headerTabla">{{ key }}</td>
+                        <td id="tablavalue">{{ value }}</td>
+                    </tr>
+                    
+                </table>
+            </div>
             <!-- Botones de accion con ese nuevo proceso -->
             <div class="container_btn_Proceso_Pase" id="">
                 <button class="Cancelar_Proceso_Pase btn btn-danger" id="">X Cancelar </button>
@@ -120,19 +126,49 @@
         </div>
 </template>
 
+<script>
+export default {
+  name: 'AltaPase',
+  data() {
+           return {
+              addedClassAsociacionUnicoItemPase: '',
+               addedClassAsociacionUnicaPase: '',
+              addedClassAsociacionSienaPase:'',
+              addedClassAsociacionExpedientePase:'',
+              addedClassDestinoUnicoPase:'',
+              addedClassAsociacionUnicaEEPase:'',
+           }
+        },
+        methods: {
+           toggleClassAsociacionUnicoItemPase() {
+              this.addedClassAsociacionUnicoItemPase = this.addedClassAsociacionUnicoItemPase === 'active' ? '' : 'active'
+            },
+            toggleClassAsociacionUnicaPase(){
+             this.addedClassAsociacionUnicaPase = this.addedClassAsociacionUnicaPASE === 'active' ? '' : 'active'
+          },
+          toggleClassAsociacionSienaPase(){
+             this.addedClassAsociacionSienaPase = this.addedClassAsociacionSienaPase === 'active' ? '' : 'active'
+          },
+          toggleClassAsociacionExpedientePase(){
+             this.addedClassAsociacionExpedientePase = this.addedClassAsociacionExpedientePase === 'active' ? '' : 'active'
+           },
+           toggleClassDestinoUnicoPase(){
+             this.addedClassDestinoUnicoPase = this.addedClassDestinoUnicoPase === 'active' ? '' : 'active'
+           },
+           toggleClassAsociacionUnicaEEPase(){
+             this.addedClassAsociacionUnicaEEPase = this.addedClassAsociacionUnicaEEPase === 'active' ? '' : 'active'
+           }
+           
+        }
+}
+</script>
 
 
 
- <script>
- export default {
-   name: 'AltaPase',
-  
- }
- </script>
  
  <style lang="css" scoped>
  /* Proceso de alta de expedientes */
-.Alta_Expedientes_Pase_Conteiner{
+ .Alta_Expedientes_Pase_Conteiner{
    display: block;
    width: 98%;
    margin: auto;

@@ -20,26 +20,26 @@
                         <!-- Input Referencia -->
                 <div class="div_Inputs_Entrada_Data_Firmante form-control">
                    <p>Referencia</p>
-                    <input type="text" class="grupo_Entrada_Data_Firma" required style="max-width: 500px; height: 40px;" id="referencia_alta_proceso_masivo_firma"/>
+                    <input type="text" class="grupo_Entrada_Data_Firma" required style="max-width: 500px; height: 40px;" id="referencia_alta_proceso_masivo_firma" v-model="referencia" />
                 </div>
                         <!-- Firmante -->
                 <div class="div_Inputs_Entrada_Data_Firmante form-control">
                     <p> Firmante</p>
                     <div class=" grupo_Entrada_Data_Firma " role="group">
                             <!-- Chequear su existencia en GDE. Selección única -->
-                            <input type="text"  style="max-width: 500px; height: 40px;" id="firmante_alta_proceso_masivo_firma" />
+                            <input type="text"  style="max-width: 500px; height: 40px;" id="firmante_alta_proceso_masivo_firma" v-model="firmante"/>
                     </div>
                 </div>
                             <!--Button Tipo de Documento  -->
                 <div class="div_Inputs_Entrada_Data_Firmante form-control">
                     <p>Tipo de Documento</p>
                     <div class="btn-group grupo_Entrada_Data_Firma" role="group">
-                        <select class="selectDataAlta" name="Seleccionar" id="tipoDeDocumento_alta_proceso_masivo_firma">
-                            <option>IDCIN</option>
-                            <option>IFGRA</option>
-                            <option>CROQU </option>
-                            <option>FPCCA</option>
-                            <option class="SeleccionarOption" selected>Seleccionar</option>
+                        <select class="selectDataAlta" name="Seleccionar" id="tipoDeDocumento_alta_proceso_masivo_firma" v-model="tipoDocumento" >
+                            <option value="IDCIN">IDCIN</option>
+                            <option value="IFGRA">IFGRA</option>
+                            <option value="CROQU">CROQU </option>
+                            <option value="FPCCA">FPCCA</option>
+                            <option value="" selected hidden >Seleccionar...</option>
                           </select>
                     </div>
                 </div>
@@ -52,35 +52,39 @@
 
                 <!-- SWITCH -->
                 
-                <div class="div_Permite_Asociacion_Firma Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control " id="InputActiveEntidad">
+                <div class="div_Permite_Asociacion_Firma Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control " id="InputActiveEntidad" v-bind:class="addedClassSelectContainerEntidad">
                     <p>Entidad</p>
                     <div class="btn-group grupo_Entrada_Data_Firma Select_Asociacion_Alta_Firma" role="group" >
-                        <select class="select_Data_Alta" id="SelectInmueble" name="Seleccionar" style="width:100%; height: 40px;" >
-                            <option value="" selected disabled>Seleccionar</option>
-                            <option>Inmueble</option>
-                            <option >Contrato</option>
-                            <option >Dominio</option>
-                            <option >Catastro</option>
-                            <option >Titulo</option>
-                            <option >Operaciones</option>
+                        <select class="select_Data_Alta" id="SelectInmueble" name="Seleccionar" style="width:100%; height: 40px;" v-model="entidad">
+                            <option value="" selected hidden >Seleccionar...</option>
+                            <option value="Inmueble">Inmueble</option>
+                            <option value="Contrato">Contrato</option>
+                            <option value="Dominio">Dominio</option>
+                            <option value="Catastro">Catastro</option>
+                            <option value="Titulo">Titulo</option>
+                            <option value="Operaciones">Operaciones</option>
                         </select>
                     </div>
                 </div>
-                <div class="div_Permite_Asociacion_Firma2 btn_Unico_Item ">
+                <div class="div_Permite_Asociacion_Firma2 btn_Unico_Item " v-bind:class="addedClassAsociacionUnicoItemContainerFirma">
                     <p>¿Asocia a único item?</p>
-                    <button class="Swich_Item_Unico" id="SwichItemUnico" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Item_Unico" id="SwichItemUnico" @click="toggleClassAsociaUnicoItem"    v-bind:class="addedClassAsociaUnicoItem"><span >No</span><span  >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Firma2">
                     <p>¿Permite Asociación?</p>
-                    <button class="Swich_Asociacion" id="SwichAsociacion"  ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="SwichAsociacion"  @click="toggleClassAsociacionFirma"  v-bind:class="addedClassAsociacionFirma"  ><span >No</span><span>Si</span></button>
                 </div>
             </div>
             <!-- Tipo de docuemento SIENA -->
-            <div class="div_Inputs_Entrada_Data_Firmante Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control" id="div_InputTipoDocumentoSIENA">
+            <div class="div_Inputs_Entrada_Data_Firmante Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control" id="div_InputTipoDocumentoSIENA" v-bind:class="addedClassTipoDocumentoSiena">
                  <p>Tipo de documento SIENA</p>
                  <div  class="btn-group grupo_Entrada_Data_Firma">
-                     <select class="select_Data_Alta" id="TipoDocumentoSiena">
-                         <option >Seleccionar</option>
+                     <select class="select_Data_Alta" id="TipoDocumentoSiena" v-model="tipoDocumentoSiena">
+                        <option value="" selected hidden >Seleccionar...</option>
+                        <option value="IDCIN">IDCIN</option>
+                        <option value="IFGRA">IFGRA</option>
+                        <option value="CROQU">CROQU </option>
+                        <option value="FPCCA">FPCCA</option>
                      </select>
                  </div>
             </div>
@@ -95,12 +99,22 @@
                 <p>Entidad</p>
                 <p>Id.Entidad</p>
             </div>
-             <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;"></div>
+
+            <!-- tabla localstorage -->
+             <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;">
+                <table >
+                    <tr v-for="(value, key) in localStorageData" :key="key" >
+                        <td id="headerTabla">{{ key }}</td>
+                        <td id="tablavalue">{{ value }}</td>
+                    </tr>
+                    
+                </table>
+            </div>
             <!-- Botones de accion con ese nuevo proceso -->
             <div class="container_btn_Proceso_Firma" id="Alta_firma_container_btn">
                 <button class="Cancelar_Proceso_Firma btn btn-danger" id="btnCancelarFirma">X Cancelar </button>
                 <button class="Procesar_Proceso_Firma btn btn-primary" id="btnProcesarFirma"> Procesar </button>
-                <button class="Guardar_Proceso_Firma btn btn-success" id="btnGuardarFirma">  Guardar </button>
+                <button class="Guardar_Proceso_Firma btn btn-success" id="btnGuardarFirma" @click="guardarTipo">  Guardar </button>
             </div>
         </div>
         
@@ -117,37 +131,100 @@
   <script>
   export default {
     name: 'AltaFirma',
-    //@click="toggleClassAsociacionFirma" v-bind:class="addedClassAsociacionFirma" 
+    
     data() {
+        
             return {
-                //addedClassAsociacionFirma: '',
-            //    addedClassAsociaExpediente: '',
-            //    addedClassAsociaSiena:'',
-            //   addedClassMotivoInterno:'',
+                // class de btn reactivo
+                addedClassAsociacionFirma: '',
+                addedClassAsociacionUnicoItemContainerFirma:'',
+                addedClassSelectContainerEntidad:'',
+                addedClassTipoDocumentoSiena:'',
+                addedClassAsociaUnicoItem:'',
 
+                
+
+            // localStorage
+
+                referencia: "",
+                firmante: "",
+                tipoDocumento:"",
+                entidad:'',
+                tipoDocumentoSiena:'',
+                // personas: []
+
+                // btn localstorage
+                buttonPerimteAsociacion: false,
+                buttonAsociaUnicoItem: false,
+
+
+                // localsotagetable
+                localStorageData: null
             }
          },
+
+
          methods: {
-            // toggleClassAsociacionFirma() {
-            //     this.addedClassAsociacionFirma = this.addedClassAsociacionFirma === 'active' ? '' : 'active'
-            //  },
-            // toggleClassAsociaExpediente(){
-            //    this.addedClassAsociaExpediente = this.addedClassAsociaExpediente === 'active' ? '' : 'active'
-            // },
-            // toggleClassAsociaSiena(){
-            //    this.addedClassAsociaSiena = this.addedClassAsociaSiena === 'active' ? '' : 'active'
-            // },
-            // toggleClassMotivoInterno(){
-            //    this.addedClassMotivoInterno = this.addedClassMotivoInterno === 'active' ? '' : 'active'
-            //  }
+            // btn reactive
+        toggleClassAsociacionFirma() {
+               this.addedClassAsociacionFirma = this.addedClassAsociacionFirma === 'active' ? '' : 'active'
+               this.addedClassAsociacionUnicoItemContainerFirma = this.addedClassAsociacionUnicoItemContainerFirma === 'active' ? '' : 'active'
+                // btn localstorage
+                this.buttonPerimteAsociacion = !this.buttonPerimteAsociacion
+            },
+         toggleClassAsociaUnicoItem(){
+                this.addedClassSelectContainerEntidad = this.addedClassSelectContainerEntidad === 'active' ? '' : 'active'
+                this.addedClassTipoDocumentoSiena = this.addedClassTipoDocumentoSiena === 'active' ? '' : 'active'
+                this.addedClassAsociaUnicoItem = this.addedClassAsociaUnicoItem === 'active' ? '' : 'active'
+           
+                // btn localstorage
+                this.buttonAsociaUnicoItem = !this.buttonAsociaUnicoItem
+            },
+
+
+     // localstorage
+        guardarTipo() {
+            // tipo documento select
+            localStorage.setItem("tipo_documento", this.tipoDocumento);
             
-         }
+            // const persona = { referencia: this.referencia, firmante: this.firmante };
+            // this.personas.push(persona);
+            // valores de inputs iniciales
+            localStorage.setItem("referencia", this.referencia);
+            localStorage.setItem("firmante", this.firmante);
+        
+            // brn guardados 
+            if (this.buttonPerimteAsociacion) {
+            localStorage.setItem('buttonPerimteAsociacion', this.buttonPerimteAsociacion)
+            
+                } else {
+            localStorage.removeItem('buttonPerimteAsociacion')
+            
+                }
+            if (this.buttonAsociaUnicoItem) {
+                localStorage.setItem('buttonAsociaUnicoItem', JSON.stringify(this.buttonAsociaUnicoItem))
+                   // entidad
+                    localStorage.setItem("entidad", this.entidad);
+                    // tipoDocumentoSiena
+                    localStorage.setItem("tipoDocumentoSiena", this.tipoDocumentoSiena);
+            } else {       
+                 localStorage.removeItem('buttonAsociaUnicoItem')
+                 localStorage.removeItem('tipoDocumentoSiena')
+                 localStorage.removeItem('entidad')
+                } 
+
+                // Tira valores dentro de la tabla localStorage  
+                this.localStorageData = {};
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+                        this.localStorageData[key] = localStorage.getItem(key);
+                        }
+                            
+        },
+        
+
+     }
   }
-
- 
-
-
-  
   </script>
   
   <style lang="css" scoped>
@@ -162,6 +239,7 @@
     margin-top: 10px;
     border-radius: 5px;
     height: auto;
+    margin-bottom: 400px;
 }
 
 
@@ -243,18 +321,19 @@
 #div_InputTipoDocumentoSIENA{
     margin: auto;
     display: none;
+    margin-top: 50px !important;
 }
-.reactive#div_InputTipoDocumentoSIENA.active{
+#div_InputTipoDocumentoSIENA.active{
     display: block;
-    margin-top: 50px;
-    width: 300px;
     
+    width: 300px;
+    margin: auto;
 }
 #InputActiveEntidad{
     display: none;
     
 }
-.reactive#InputActiveEntidad.active{
+#InputActiveEntidad.active{
     display: block;
     
 }
@@ -470,6 +549,39 @@
     border-radius: 5px;
     border: none;
 }
+/* tabla reactiva */
+#divTablaAltaProcesoMasivoDeFirma table{
+width: fit-content;
+display: flex;
+margin-bottom: 100px;
+border: solid 1px rgb(113, 112, 112);
+border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+#divTablaAltaProcesoMasivoDeFirma table tr td{
+    display: block;
+    
+  
+}
+tr #headerTabla{
+    background-color: #65b2e2;
+    border: 1px solid gray;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+   
+}
+tr #tablavalue{
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.448);
+    width: 100%;
+    height:50px;
+    padding: 10px;
+ 
+}
+
 /* media querys */
 @media screen and (max-width: 1400px){
     .container_Inputs_Entrada_Data_Firmante{

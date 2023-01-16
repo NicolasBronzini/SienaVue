@@ -18,26 +18,26 @@
                 <!-- Input Referencia -->
                <div class="div_Inputs_Entrada_Data_Caratulacion form-control">
                   <p>Referencia</p>
-                     <input type="text" class="grupo_Entrada_Data_Caratulacion" required style="width: 100%; height: 40px;" id="referencia_alta_proceso_masivo_firma"/>
+                     <input type="text" class="grupo_Entrada_Data_Caratulacion" required style="width: 100%; height: 40px;" id="referencia_alta_proceso_masivo_firma"  v-model="referenciaCaratulacion"/>
                </div>
                 <!-- Firmante -->
                <div class="div_Inputs_Entrada_Data_Caratulacion form-control">
                      <p> Firmante</p>
                      <div class=" grupo_Entrada_Data_Caratulacion " role="group">
                            <!-- Chequear su existencia en GDE. Selección única -->
-                           <input type="text"  style="width: 100%; height: 40px;" id="firmante_alta_proceso_masivo_firma" />
+                           <input type="text"  style="width: 100%; height: 40px;" id="firmante_alta_proceso_masivo_firma" v-model="firmanteCaratulacion"/>
                      </div>
                </div>
                     <!--Button Tipo de Documento  -->
                <div class="div_Inputs_Entrada_Data_Caratulacion form-control" role="group">
                      <p>Tipo de Documento</p>
                      <div class=" grupo_Entrada_Data_Caratulacion" role="group">
-                        <select class="selectDataAlta" name="Seleccionar" id="" style="width:100%; height: 40px;">
-                           <option>IDCIN</option>
-                           <option>IFGRA</option>
-                           <option>CROQU </option>
-                           <option>FPCCA</option>
-                           <option class="SeleccionarOption" selected>Seleccionar</option>
+                        <select class="selectDataAlta" name="Seleccionar" id="" style="width:100%; height: 40px;" v-model="tipoDocumentoCaratulacion">
+                           <option value="IDCIN">IDCIN</option>
+                           <option value="IFGRA">IFGRA</option>
+                           <option value="CROQU">CROQU </option>
+                           <option value="FPCCA">FPCCA</option>
+                           <option value="" selected hidden >Seleccionar...</option>
                            </select>
                      </div>
                </div>
@@ -65,42 +65,55 @@
 
             <div class="container_Permite_Asociacion_Caratulacion container_Permite_Asociacion_Caratulacion2">
                 
-                <div class="div_Inputs_Entrada_Data_Caratulacion Inputs_btnAsocia_Unico_Item animate__animated form-control" >
+                <div class="div_Inputs_Entrada_Data_Caratulacion Inputs_btnAsocia_Unico_Item animate__animated form-control" id="TrataCaratulacion">
                     <p>Trata</p>
                     <div  class=" grupo_Entrada_Data_Caratulacion">
-                        <select class="select_Data_Alta" id="" style="width: 100%; height: 40px;">
+                        <select class="select_Data_Alta" id="" style="width: 100%; height: 40px;" v-model="trataCaratulacion">
                             <option >Seleccionar</option>
                         </select>
                     </div>
                </div>
-
+               <div class="div_Permite_Asociacion_Caratulacion2" id="divContainerAsociacionUnicaEECaratulacion" v-bind:class="addedClassAsociacionUnicoEEContainerCaratulacion">
+                    <p> <strong> ¿Asocia a un unico EE</strong></p>
+                    <button class="Swich_Asociacion" id="switchMotivoInternoEECaratulacion"  @click="toggleClassAsociaUnicoEECaratulacion" v-bind:class="addedClassAsociaUnicoEECaratulacion"><span >No</span><span >Si</span></button>
+                </div>
                 <div class="div_Permite_Asociacion_Caratulacion2">
                     <p>¿Motivo Interno y Descripción <br>
                         Adicional del tramite coinciden ?</p>
-                    <button class="Swich_Asociacion" id="switchMotivoInternoEECaratulacion" @click="toggleClassMotivoInterno" v-bind:class="addedClassMotivoInterno" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="switchMotivoInternoCaratulacion" @click="toggleClassMotivoInterno" v-bind:class="addedClassMotivoInterno" ><span >No</span><span >Si</span></button>
                 </div>
+                
+            </div>
+            <div class="container_Permite_Asociacion_Caratulacion container_Permite_Asociacion_Caratulacion2">
+                
+                
+                  <div class="div_Inputs_Entrada_Data_Caratulacion form-control" v-bind:class="addedClassContainerExpedienteElectronicoCaratulacion" id="ContainerExpedienteElectronicoCaratulacion">
+                     <div>
+                        <label for=""> <strong> Expediente Electrónico</strong></label>
+                     </div>
+                     <div>
+                        <input type="text" placeholder="EX-2017-22671255- -APN-DMEYD#AABE" v-model="numExpedienteCaratulacion"/>
+                     </div>
+                  </div>
+              
                 
             </div>
 
             <!-- Apartado cruadricula Caratulacion -->
-            <div class="Datos_CaratulacionEE_Container">
-                <div class="container_HeaderCuadricula">
-                    <div class="_data_Filtro_Caratulacion">DATOS CARATULA EXPEDIENTE ELECTRÓNICO</div>
-                    <div class="btn_data_Filtro_Caratulacion"><button>Primero</button><button>Anterior</button><p>Registros {numero}</p><p>Pàgina{numero} de {numero}</p><button>Siguiente</button><button>Último</button></div>
-                </div>
-                
-                <div class="Container_Cuadricula_Motivo_Interno_Caratulacion">
-                    <div class="Header_Cuadricula_Motivo_Interno_Caratulacion">Motivo Interno/ Descripcion Adicional del Tramite</div>
-                    <div class="Output_Cuadricula_Motivo_Interno_Caratulacion">
-
-                    </div>
-                </div>
+            <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;">
+                <table >
+                    <tr v-for="(value, key) in localStorageData" :key="key" >
+                        <td id="headerTabla">{{ key }}</td>
+                        <td id="tablavalue">{{ value }}</td>
+                    </tr>
+                    
+                </table>
             </div>
             <!-- Botones de accion con ese nuevo proceso -->
             <div class="container_btn_Proceso_Caratulacion" id="Alta_firma_container_btn">
                 <button class="Cancelar_Proceso_Caratulacion btn btn-danger" id="">X Cancelar </button>
                 <button class="Procesar_Proceso_Caratulacion btn btn-primary" id=""> Procesar </button>
-                <button class="Guardar_Proceso_Caratulacion btn btn-success" id="">  Guardar </button>
+                <button class="Guardar_Proceso_Caratulacion btn btn-success"  @click="guardarCaratulacion" >  Guardar </button>
             </div>
         </div>
   </template>
@@ -111,27 +124,148 @@
     name: 'AltaCaratulacion',
             data() {
             return {
+              
+
+               
+                // class de btn reactivo
                addedClassTrataUnica: '',
                addedClassAsociaExpediente: '',
                addedClassAsociaSiena:'',
               addedClassMotivoInterno:'',
 
+
+               // Reactive btn container
+               addedClassAsociacionUnicoEEContainerCaratulacion:'',
+               addedClassContainerExpedienteElectronicoCaratulacion:'',
+               addedClassAsociaUnicoEECaratulacion:'',
+
+               // localStorage
+
+               referenciaCaratulacion: "",
+                firmanteCaratulacion: "",
+                tipoDocumentoCaratulacion:"",
+                trataCaratulacion:'',
+                numExpedienteCaratulacion:'',
+                // personas: []
+
+                // btn localstorage
+                buttonTrataUnicaCaratulacion: false,
+                buttonAsociaExpedienteCaratulacion: false,
+                buttonAsociaSienaCaratulacion: false,
+                buttonAsociaUnicoEECaratulacion: false,
+                buttonAMotivoInternoCaratulacion: false,
+
+
+                // localsotagetable
+                localStorageData: null
             }
          },
          methods: {
+
+            // Localstorage
+
+
+
+
+
+            // botones reactivos
             toggleClassTrataUnica() {
                this.addedClassTrataUnica = this.addedClassTrataUnica === 'active' ? '' : 'active'
+               // btn localstorage
+               this.buttonTrataUnicaCaratulacion = !this.buttonTrataUnicaCaratulacion
             },
             toggleClassAsociaExpediente(){
                this.addedClassAsociaExpediente = this.addedClassAsociaExpediente === 'active' ? '' : 'active'
+               // Estos activan los container de asociacion unico ee que solo se tiene que mostrar cuando el btn este activo
+               this.addedClassAsociacionUnicoEEContainerCaratulacion = this.addedClassAsociacionUnicoEEContainerCaratulacion === 'active' ? '' : 'active'
+               this.addedClassContainerExpedienteElectronicoCaratulacion = this.addedClassContainerExpedienteElectronicoCaratulacion === 'active' ? '' : 'active'
+               // btn localstorage
+               this.buttonAsociaExpedienteCaratulacion = !this.buttonAsociaExpedienteCaratulacion
             },
             toggleClassAsociaSiena(){
                this.addedClassAsociaSiena = this.addedClassAsociaSiena === 'active' ? '' : 'active'
+               // btn localstorage
+               this.buttonAsociaSienaCaratulacion = !this.buttonAsociaSienaCaratulacion
             },
             toggleClassMotivoInterno(){
                this.addedClassMotivoInterno = this.addedClassMotivoInterno === 'active' ? '' : 'active'
-             }
+               // btn localstorage
+               this.buttonAMotivoInternoCaratulacion = !this.buttonAMotivoInternoCaratulacion
+             },
+             
+             toggleClassAsociaUnicoEECaratulacion(){
+               this.addedClassAsociaUnicoEECaratulacion = this.addedClassAsociaUnicoEECaratulacion === 'active' ? '' : 'active'
+               // btn localstorage
+               this.buttonAsociaUnicoEECaratulacion = !this.buttonAsociaUnicoEECaratulacion
+             },
             
+
+             // localstorage
+       guardarCaratulacion() {
+            // tipo documento select
+            localStorage.setItem("tipo_documento", this.tipoDocumentoCaratulacion);
+            
+            // const persona = { referencia: this.referencia, firmante: this.firmante };
+            // this.personas.push(persona);
+            // valores de inputs iniciales
+            localStorage.setItem("referencia", this.referenciaCaratulacion);
+            localStorage.setItem("firmante", this.firmanteCaratulacion);
+            //   trata unica
+            localStorage.setItem("Trata", this.trataCaratulacion);
+
+
+            // brn guardados 
+               if (this.buttonTrataUnicaCaratulacion) {
+                  localStorage.setItem('Trata_Unica', this.buttonTrataUnicaCaratulacion)
+                  
+                } else {
+                    localStorage.removeItem('Trata_Unica')
+            
+                }
+               //  btnValor
+                if (this.buttonAsociaExpedienteCaratulacion) {
+                  localStorage.setItem('Asocia_Expediente', this.buttonAsociaExpedienteCaratulacion)
+            
+                } else {
+                      localStorage.removeItem('Asocia_Expediente')
+            
+                }
+                if (this.buttonAsociaSienaCaratulacion) {
+                  localStorage.setItem('Asocia_Siena', this.buttonAsociaSienaCaratulacion)
+            
+                } else {
+                      localStorage.removeItem('Asocia_Siena')
+            
+                }
+                if (this.buttonAsociaUnicoEECaratulacion) {
+                  localStorage.setItem('Asocia_Unico_Expediente_EE', this.buttonAsociaUnicoEECaratulacion)
+            
+                } else {
+                      localStorage.removeItem('Asocia_Unico_Expediente_EE')
+            
+                }
+            if (this.buttonAsociaExpedienteCaratulacion) {
+                localStorage.setItem('buttonAsociaUnicoItem', JSON.stringify(this.buttonAsociaUnicoItem))
+                   // entidad
+                    localStorage.setItem("entidad", this.entidad);
+                    // tipoDocumentoSiena
+                    localStorage.setItem("tipoDocumentoSiena", this.tipoDocumentoSiena);
+            } else {       
+                 localStorage.removeItem('buttonAsociaUnicoItem')
+                 localStorage.removeItem('tipoDocumentoSiena')
+                 localStorage.removeItem('entidad')
+                } 
+
+                // Tira valores dentro de la tabla localStorage  
+                this.localStorageData = {};
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+                        this.localStorageData[key] = localStorage.getItem(key);
+                        }
+                            
+        },
+
+
          }
       }
   
@@ -175,7 +309,7 @@
 }
 .div_Inputs_Entrada_Data_Caratulacion{
    
-   width: 30%;
+  
   margin: 0 20px 0 30px;
 }
 .div_Inputs_Entrada_Data_Caratulacion p{
@@ -188,7 +322,7 @@
    text-align: start;   
 }
 .div_Inputs_Entrada_Data_Caratulacion input{
-  width: 500px;
+  width: 600px;
 }
 .grupo_Entrada_Data_Caratulacion{
    margin-top: -10px;
@@ -275,6 +409,8 @@
    margin: -5px 0px;
    border: none;
 }
+
+
 /*---------------------------------- Switch------------------------------- */
 .Swich_Asociacion{
    background: rgba(17, 123, 245, 1.0);
@@ -390,6 +526,21 @@
 
 /* -------------------------------------------------------------- */
 /* Asocia Unico Item  Caratulacion */
+#divContainerAsociacionUnicaEECaratulacion{
+display: none;
+}
+#divContainerAsociacionUnicaEECaratulacion.active{
+display: block;
+}
+#ContainerExpedienteElectronicoCaratulacion{
+   display: none;
+}
+#ContainerExpedienteElectronicoCaratulacion.active{
+display: block;
+width: fit-content;
+display: block;
+margin: auto;
+}
 #switchAsociaUnicoEEPase2::after{
    top: 0;
   right: 0;
@@ -402,6 +553,18 @@
 }
 
 
+
+/* Asocia Motivo Interno  Caratulacion */
+#switchMotivoInternoCaratulacion::after{
+   top: 0;
+  right: 0;
+  left: unset;
+}
+#switchMotivoInternoCaratulacion.active::after{
+   right: unset;
+   left: 0;
+   content: "No";
+}
 
 /* Asocia Motivo Interno  Caratulacion */
 #switchMotivoInternoEECaratulacion::after{
@@ -469,6 +632,39 @@
    border-radius: 5px;
    border: none;
 }
+
+/* tabla reactiva */
+#divTablaAltaProcesoMasivoDeFirma table{
+width: fit-content;
+display: flex;
+margin-bottom: 100px;
+border: solid 1px rgb(113, 112, 112);
+border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+#divTablaAltaProcesoMasivoDeFirma table tr td{
+    display: block;
+    
+  
+}
+tr #headerTabla{
+    background-color: #65b2e2;
+    border: 1px solid gray;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+   
+}
+tr #tablavalue{
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.448);
+    width: 100%;
+    height:50px;
+    padding: 10px;
+ 
+}
 /* media querys */
 @media screen and (max-width: 1400px){
    .container_Inputs_Entrada_Data_Caratulacion{
@@ -491,7 +687,9 @@
 
 
 
-
+#TrataCaratulacion{
+   max-width: 500px !important;
+}
 
 
 

@@ -18,24 +18,20 @@
                         <!-- Input Referencia -->
                 <div class="div_Inputs_Entrada_Data_Vincular Inputs_btnAsocia_Unico_Item  form-control">
                    <p>Referencia</p>
-                    <input type="text" class="grupo_Entrada_Data_Vincular" required style="width: 100%; height: 40px;"/>
+                    <input type="text" class="grupo_Entrada_Data_Vincular" required style="width: 100%; height: 40px;" v-model="referenciaVinculacion"/>
                 </div>
                         <!-- Firmante -->
                 <div class="div_Inputs_Entrada_Data_Vincular Inputs_btnAsocia_Unico_Item  form-control">
                     <p> Firmante</p>
                     <div class=" grupo_Entrada_Data_Vincular" role="group">
-                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;">
-                            <!-- Chequear su existencia en GDE. Selección única -->
-                            <option class="Seleccionar_Option" selected>Seleccionar</option>
-                            <option>nombre de firmante</option>
-                          </select>
+                     <input type="text" class="grupo_Entrada_Data_Vincular" required style="width: 100%; height: 40px;" v-model="firmanteVinculacion"/>
                     </div>
                 </div>
                             <!--Button Tipo de Documento  -->
                 <div class="div_Inputs_Entrada_Data_Vincular Inputs_btnAsocia_Unico_Item  form-control">
                     <p>Tipo de Documento</p>
                     <div class=" grupo_Entrada_Data_Vincular" role="group">
-                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;">
+                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;" v-model="tipoDocuVinculacion">
                             <option>IDCIN</option>
                             <option>IFGRA</option>
                             <option>CROQU </option>
@@ -51,15 +47,15 @@
             <div class="container_Permite_Asociacion_Vincular container_Permite_Asociacion_Vincular2">
                 <div class="div_Permite_Asociacion_Vincular2">
                     <p>¿Asocia a un único EE principal?</p>
-                    <button class="Swich_Asociacion" id="SwitchAsociaUnicoEEPrincipalVincular" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="SwitchAsociaUnicoEEPrincipalVincular" @click="toggleClassAsociacionUnicoEEVinculacion" v-bind:class="addedClassAsociacionUnicoEEVinculacion"><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Vincular2">
                     <p>¿Requiere Asociación SIENA?</p>
-                    <button class="Swich_Asociacion" id="SwitchAsociaSienaVincular" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="SwitchAsociaSienaVincular" @click="toggleClassAsociacionSienaVinculacion" v-bind:class="addedClassAsociacionSienaVinculacion"><span >No</span><span >Si</span></button>
                 </div>
                 <div class="div_Permite_Asociacion_Vincular2">
                     <p>¿Asocia a un único Item?</p>
-                    <button class="Swich_Asociacion" id="SwitchAsociaUnicoItemVincular" ><span >No</span><span >Si</span></button>
+                    <button class="Swich_Asociacion" id="SwitchAsociaUnicoItemVincular" @click="toggleClassAsociacionUnicoItemVinculacion" v-bind:class="addedClassAsociacionUnicoItemVinculacion"><span >No</span><span >Si</span></button>
                 </div>
                 
             </div>
@@ -70,13 +66,13 @@
                         <!-- Input Referencia -->
                 <div class="div_Inputs_Entrada_Data_Vincular   form-control" id="ExpedienteElectronicoVincular">
                    <p>Expediente Electronico</p>
-                    <input type="text" class="grupo_Entrada_Data_Vincular" required placeholder="Ex-Año-XXXXXXXX-APN-Reparticion" style="width: 100%; height: 40px;"/>
+                    <input type="text" class="grupo_Entrada_Data_Vincular" required placeholder="Ex-Año-XXXXXXXX-APN-Reparticion" style="width: 100%; height: 40px;" v-model="expedienteVinculacion"/>
                 </div>
                         <!-- Firmante -->
                 <div class="div_Inputs_Entrada_Data_Vincular form-control" id="EntidadVincularEE">
                     <p> Entidad</p>
                     <div class=" grupo_Entrada_Data_Vincular" role="group">
-                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;">
+                        <select class="select_Data_Alta" name="Seleccionar" style="width: 100%; height: 40px;" v-model="entidadVinculacion">
                             <!-- Chequear su existencia en GDE. Selección única -->
                             <option class="Seleccionar_Option" selected disabled>Seleccionar</option>
                             <option>nombre de firmante</option>
@@ -84,23 +80,23 @@
                     </div>
                 </div>
             </div>
-
-             <!-- Apartado cruadricula Vinculacion -->
-            <div class="DatosVincularContainer">
-                <div class="_dataFiltroVincular"><span>+</span><span>Importar EE generado masivamente</span></div>
-                <div class="ContainerCuadriculaMotivoInternoVincular">
-                    <div class="HeaderCuadriculaMotivoInternoVincular"><h4>EXPEDIENTE ELECTRÓNICO SECUNDARIO</h4><h4>IDENTIDAD</h4> </div>
-                    <div class="OutputCuadriculaMotivoInternoVincular">
-
-                    </div>
-                </div>
+            <!-- Apartado cruadricula Caratulacion -->
+            <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;">
+                <table >
+                    <tr v-for="(value, key) in localStorageData" :key="key" >
+                        <td id="headerTabla">{{ key }}</td>
+                        <td id="tablavalue">{{ value }}</td>
+                    </tr>
+                    
+                </table>
             </div>
+            
             
             <!-- Botones de accion con ese nuevo proceso -->
             <div class="container_btn_Proceso_Vincular" id="">
                 <button class="Cancelar_Proceso_Vincular btn btn-danger" id="">X Cancelar </button>
                 <button class="Procesar_Proceso_Vincular btn btn-primary" id=""> Procesar </button>
-                <button class="Guardar_Proceso_Vincular btn btn-success" id="">  Guardar </button>
+                <button class="Guardar_Proceso_Vincular btn btn-success" id=""  @click="guardarTipo">  Guardar </button>
             </div>
         </div>
 </template>
@@ -111,7 +107,93 @@
  <script>
  export default {
    name: 'AltaVinculacion',
- 
+   data() {
+           return {
+            addedClassAsociacionUnicoItemVinculacion: '',
+            addedClassAsociacionSienaVinculacion: '',
+            addedClassAsociacionUnicoEEVinculacion:'',
+
+              // localStorage
+
+              referenciaVinculacion: "",
+                firmanteVinculacion: "",
+                tipoDocuVinculacion:"",
+                expedienteVinculacion:'',
+                entidadVinculacion:'',
+                // personas: []
+
+                // btn localstorage
+                buttonAsociaUnicoEEVinculacion: false,
+                buttonRequiereAsociacionVinculacion: false,
+                buttonAsociaUnicoVinculacion: false,
+               
+
+
+                // localsotagetable
+                localStorageData: null
+           }
+        },
+        methods: {
+           toggleClassAsociacionUnicoEEVinculacion() {
+              this.addedClassAsociacionUnicoEEVinculacion = this.addedClassAsociacionUnicoEEVinculacion === 'active' ? '' : 'active'
+              // btn localstorage
+              this.buttonAsociaUnicoEEVinculacion = !this.buttonAsociaUnicoEEVinculacion
+            },
+            toggleClassAsociacionSienaVinculacion(){
+             this.addedClassAsociacionSienaVinculacion = this.addedClassAsociacionSienaVinculacion === 'active' ? '' : 'active'
+             // btn localstorage
+             this.buttonRequiereAsociacionVinculacion = !this.buttonRequiereAsociacionVinculacion
+          },
+          toggleClassAsociacionUnicoItemVinculacion(){
+             this.addedClassAsociacionUnicoItemVinculacion = this.addedClassAsociacionUnicoItemVinculacion === 'active' ? '' : 'active'
+             // btn localstorage
+             this.buttonAsociaUnicoVinculacion = !this.buttonAsociaUnicoVinculacion
+          },
+
+
+           // localstorage
+        guardarTipo() {
+            // tipo documento select
+            localStorage.setItem("Tipo_documento", this.tipoDocuVinculacion);
+            
+            // const persona = { referencia: this.referencia, firmante: this.firmante };
+            // this.personas.push(persona);
+            // valores de inputs iniciales
+            localStorage.setItem("Referencia", this.referenciaVinculacion);
+            localStorage.setItem("Firmante", this.firmanteVinculacion);
+        
+            // brn guardados 
+            if (this.buttonAsociaUnicoEEVinculacion) {
+            localStorage.setItem('Asocia_a_un_unico_EE_principal', this.buttonAsociaUnicoEEVinculacion)
+            
+                } else {
+            localStorage.removeItem('Asocia_a_un_unico_EE_principal')
+            
+                }
+            if (this.buttonRequiereAsociacionVinculacion) {
+                localStorage.setItem('Requiere_Asociacion_SIENA', this.buttonRequiereAsociacionVinculacion)
+                  
+            } else {       
+                 localStorage.removeItem('Requiere_Asociacion_SIENA')
+                 
+                } 
+            if (this.buttonAsociaUnicoVinculacion) {
+                localStorage.setItem('Asocia_a_un_unico_item', this.buttonAsociaUnicoVinculacion)
+                  
+            } else {       
+                 localStorage.removeItem('Asocia_a_un_unico_item')
+                 
+                } 
+
+                // Tira valores dentro de la tabla localStorage  
+                this.localStorageData = {};
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+                        this.localStorageData[key] = localStorage.getItem(key);
+                        }
+                            
+        },
+        }
  }
 
  </script>
@@ -341,13 +423,13 @@
 
 
 /* -------------------------------------------------------------- */
-/* Asocia UnicoItem Principal */
-#SwitchAsociaUnicoEEPrincipalVincular::after{
+/* Asocia UnicoItem  */
+#SwitchAsociaUnicoItemVincular::after{
    top: 0;
   right: 0;
   left: unset;
 }
-#SwitchAsociaUnicoEEPrincipalVincular.active::after{
+#SwitchAsociaUnicoItemVincular.active::after{
    right: unset;
    left: 0;
    content: "No";
@@ -506,6 +588,39 @@
     border-radius: 5px;
     border: none;
  }
+ /* tabla reactiva */
+#divTablaAltaProcesoMasivoDeFirma table{
+width: fit-content;
+display: flex;
+margin-bottom: 100px;
+border: solid 1px rgb(113, 112, 112);
+border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+
+#divTablaAltaProcesoMasivoDeFirma table tr td{
+    display: block;
+    
+  
+}
+tr #headerTabla{
+    background-color: #65b2e2;
+    border: 1px solid gray;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+   
+}
+tr #tablavalue{
+    background-color: #ffffff;
+    border: 1px solid rgba(128, 128, 128, 0.448);
+    width: 100%;
+    height:50px;
+    padding: 10px;
+ 
+}
+
  /* media querys */
  @media screen and (max-width: 1400px){
     .container_Inputs_Entrada_Data_Vincular{
