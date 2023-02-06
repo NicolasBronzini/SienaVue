@@ -107,7 +107,7 @@
       <!-- Botones de accion con ese nuevo proceso -->
       <div class="container_btn_Proceso_Vincular" id="">
          <button class="Cancelar_Proceso_Vincular btn btn-danger" id="">X Cancelar </button>
-         <button class="Procesar_Proceso_Vincular btn btn-primary" id=""> Procesar </button>
+         <button class="Procesar_Proceso_Vincular btn btn-primary" id="" @click="guardarBasePase"> Procesar </button>
          <button class="Guardar_Proceso_Vincular btn btn-success" id="" @click="guardarTipo"> Guardar </button>
       </div>
    </div>
@@ -118,6 +118,7 @@
 
 <script>
 import moment from 'moment';
+import axios from 'axios';
 export default {
    name: 'AltaVinculacion',
    data() {
@@ -151,21 +152,20 @@ export default {
       }
    },
    methods: {
-      toggleClassAsociacionUnicoEEVinculacion() {
-         this.addedClassAsociacionUnicoEEVinculacion = this.addedClassAsociacionUnicoEEVinculacion === 'active' ? '' : 'active'
-         // btn localstorage
-         this.buttonAsociaUnicoEEVinculacion = !this.buttonAsociaUnicoEEVinculacion
-      },
-      toggleClassAsociacionSienaVinculacion() {
-         this.addedClassAsociacionSienaVinculacion = this.addedClassAsociacionSienaVinculacion === 'active' ? '' : 'active'
-         // btn localstorage
-         this.buttonRequiereAsociacionVinculacion = !this.buttonRequiereAsociacionVinculacion
-      },
-      toggleClassAsociacionUnicoItemVinculacion() {
-         this.addedClassAsociacionUnicoItemVinculacion = this.addedClassAsociacionUnicoItemVinculacion === 'active' ? '' : 'active'
-         // btn localstorage
-         this.buttonAsociaUnicoVinculacion = !this.buttonAsociaUnicoVinculacion
-      },
+      // toggleClassAsociacionUnicoEEVinculacion() {
+      //    this.addedClassAsociacionUnicoEEVinculacion = this.addedClassAsociacionUnicoEEVinculacion === 'active' ? '' : 'active'
+      //    this.buttonAsociaUnicoEEVinculacion = !this.buttonAsociaUnicoEEVinculacion
+      // },
+      // toggleClassAsociacionSienaVinculacion() {
+      //    this.addedClassAsociacionSienaVinculacion = this.addedClassAsociacionSienaVinculacion === 'active' ? '' : 'active'
+      //    this.buttonRequiereAsociacionVinculacion = !this.buttonRequiereAsociacionVinculacion
+      // },
+
+
+      // toggleClassAsociacionUnicoItemVinculacion() {
+      //    this.addedClassAsociacionUnicoItemVinculacion = this.addedClassAsociacionUnicoItemVinculacion === 'active' ? '' : 'active'
+      //    this.buttonAsociaUnicoVinculacion = !this.buttonAsociaUnicoVinculacion
+      // },
 
 
       // localstorage
@@ -210,7 +210,34 @@ export default {
          }
 
       },
+      guardarBaseFirma() {
+         const altasVinculacion = {
+            Referencia: this.referenciaVinculacion,
+            Firmante: this.firmanteVinculacion,
+            TipoDocumento: this.tipoDocuVinculacion,
+            expedienteElectronico: this.asociaUnicoItem,
+            asociaUnicoEEPrincipal: this.buttonAsociaUnicoEEVinculacion,
+            requiereAsociacionSiena: this.buttonRequiereAsociacionVinculacion,
+            asociaUnicoItem: this.buttonAsociaUnicoVinculacion,
+            Entidad: this.entidadVinculacion,
+            TipoDocumentoSiena: this.tipoDocumentoSiena,
 
+
+         }
+         // const altaFirmasPadre = {
+         //    Referencia: this.referencia,
+         //    Firmante: this.firmante,
+         //    TipoProceso: this.TipoAlta,
+         //    Usuario: this.usuario,
+         //    EstadoLote: this.estadoLote,
+         // }
+         axios.post("https://localhost:5001/api/GDE_Vinculacion", altasVinculacion).then(response => {
+            console.log(response);
+         }).catch(error => {
+            console.error(error);
+         });
+
+      }
    }
 }
 

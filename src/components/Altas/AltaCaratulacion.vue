@@ -126,7 +126,8 @@
       <!-- Botones de accion con ese nuevo proceso -->
       <div class="container_btn_Proceso_Caratulacion" id="Alta_firma_container_btn">
          <button class="Cancelar_Proceso_Caratulacion btn btn-danger" id="">X Cancelar </button>
-         <button class="Procesar_Proceso_Caratulacion btn btn-primary" id=""> Procesar </button>
+         <button class="Procesar_Proceso_Caratulacion btn btn-primary" id="" @click="guardarBaseCaratulacion"> Procesar
+         </button>
          <button class="Guardar_Proceso_Caratulacion btn btn-success" @click="guardarCaratulacion"> Guardar </button>
       </div>
    </div>
@@ -135,13 +136,17 @@
 
 <script>
 import moment from 'moment';
+import axios from 'axios';
 export default {
    name: 'AltaCaratulacion',
    data() {
       return {
 
+         //tipo ALTa
+         TipoAlta: 'Caratulacion Masiva',
 
-
+         estadoLote: 'Pendiente',
+         usuario: 'DevTest',
          // class de btn reactivo
          addedClassTrataUnica: '',
          addedClassAsociaExpediente: '',
@@ -284,7 +289,37 @@ export default {
          }
 
       },
+      guardarBaseCaratulacion() {
+         const altasCaratulacion = {
+            firmante: this.firmanteCaratulacion,
+            referencia: this.referenciaCaratulacion,
+            tipoDocumento: this.tipoDocumentoCaratulacion,
+            requiereAsociacionSiena: this.buttonAsociaSienaCaratulacion,
+            asociaExpediente: this.buttonAsociaExpedienteCaratulacion,
+            trataUnica: this.buttonTrataUnicaCaratulacion,
+            motivoInternoDescripcionAdicionalCoinciden: this.buttonAMotivoInternoCaratulacion,
+            trata: this.trataCaratulacion,
 
+         };
+         const altaFirmasPadre = {
+            referencia: this.referenciaCaratulacion,
+            firmante: this.firmanteCaratulacion,
+            TipoProceso: this.TipoAlta,
+            Usuario: this.usuario,
+            EstadoLote: this.estadoLote,
+         };
+         axios.post("https://localhost:5001/api/AltaPadre", altaFirmasPadre).then(response => {
+            console.log(response);
+         }).catch(error => {
+            console.error(error);
+         });
+         axios.post("https://localhost:5001/api/GDE_Caratulacion", altasCaratulacion).then(response => {
+            console.log(response);
+         }).catch(error => {
+            console.error(error);
+         });
+
+      },
 
       computed: {
          fechaFormatada() {
@@ -704,14 +739,19 @@ export default {
    border: none;
 }
 
+#divTablaAltaProcesoMasivoDeFirma {
+   display: flex;
+   margin: auto;
+}
+
 /* tabla reactiva */
 #divTablaAltaProcesoMasivoDeFirma table {
    width: fit-content;
    display: flex;
    margin-bottom: 100px;
    border: solid 1px rgb(113, 112, 112);
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
+   border-top-left-radius: 1px;
+   border-top-right-radius: 1px;
 }
 
 
@@ -722,7 +762,7 @@ export default {
 }
 
 tr #headerTabla {
-   background-color: #65b2e2;
+   background-color: #1597e8;
    border: 1px solid gray;
    width: 100%;
    height: 100%;
@@ -738,6 +778,7 @@ tr #tablavalue {
    padding: 10px;
 
 }
+
 
 /* media querys */
 @media screen and (max-width: 1400px) {

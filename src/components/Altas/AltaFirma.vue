@@ -20,7 +20,7 @@
             <!-- Input Referencia -->
             <div class="div_Inputs_Entrada_Data_Firmante form-control">
                 <p>Referencia</p>
-                <input type="text" class="grupo_Entrada_Data_Firma" required style="max-width: 500px; height: 40px;"
+                <input type="text" class="grupo_Entrada_Data_Firma" style="max-width: 500px; height: 40px;"
                     id="referencia_alta_proceso_masivo_firma" v-model="referencia" />
             </div>
             <!-- Firmante -->
@@ -123,7 +123,7 @@
         <!-- Botones de accion con ese nuevo proceso -->
         <div class="container_btn_Proceso_Firma" id="Alta_firma_container_btn">
             <button class="Cancelar_Proceso_Firma btn btn-danger" id="btnCancelarFirma">X Cancelar </button>
-            <button class="Procesar_Proceso_Firma btn btn-primary" id="btnProcesarFirma" @click="guardarBaseFIrma">
+            <button class="Procesar_Proceso_Firma btn btn-primary" id="btnProcesarFirma" @click="guardarBaseFirma">
                 Procesar </button>
             <button class="Guardar_Proceso_Firma btn btn-success" id="btnGuardarFirma" @click="guardarTipo"> Guardar
             </button>
@@ -143,6 +143,7 @@
 <script>
 import moment from 'moment';
 import axios from 'axios';
+
 export default {
     name: 'AltaFirma',
 
@@ -153,6 +154,7 @@ export default {
             TipoAlta: "Firma Masiva",
             estadoLote: "Pendiente",
             usuario: "DevTest",
+
             // class de btn reactivo
             addedClassAsociacionFirma: '',
             addedClassAsociacionUnicoItemContainerFirma: '',
@@ -165,7 +167,7 @@ export default {
             // localStorage
 
             referencia: "",
-            Firmante: "",
+            firmante: "",
             tipoDocumento: "",
             entidad: "",
             tipoDocumentoSiena: "",
@@ -207,34 +209,29 @@ export default {
 
         // localstorage
         guardarTipo() {
-
-            // const persona = { referencia: this.referencia, firmante: this.firmante };
-            // this.personas.push(persona);
-            // valores de inputs iniciales
+            if (!this.referencia || !this.firmante || !this.tipoDocumento) {
+                alert("Los campos de referencia, firmante y tipo de documento son obligatorios");
+                return;
+            }
             localStorage.setItem("referencia", this.referencia);
             localStorage.setItem("firmante", this.firmante);
-            // tipo documento select
             localStorage.setItem("tipo_documento", this.tipoDocumento);
-
-            // brn guardados 
             if (this.buttonPerimteAsociacion) {
-                localStorage.setItem('buttonPerimteAsociacion', this.buttonPerimteAsociacion)
-
+                localStorage.setItem('buttonPerimteAsociacion', this.buttonPerimteAsociacion);
             } else {
-                localStorage.removeItem('buttonPerimteAsociacion')
-
+                localStorage.removeItem('buttonPerimteAsociacion');
             }
             if (this.buttonAsociaUnicoItem) {
-                localStorage.setItem('buttonAsociaUnicoItem', JSON.stringify(this.buttonAsociaUnicoItem))
-                // entidad
+                localStorage.setItem('buttonAsociaUnicoItem', JSON.stringify(this.buttonAsociaUnicoItem));
                 localStorage.setItem("entidad", this.entidad);
-                // tipoDocumentoSiena
                 localStorage.setItem("tipoDocumentoSiena", this.tipoDocumentoSiena);
             } else {
-                localStorage.removeItem('buttonAsociaUnicoItem')
-                localStorage.removeItem('tipoDocumentoSiena')
-                localStorage.removeItem('entidad')
+                localStorage.removeItem('buttonAsociaUnicoItem');
+                localStorage.removeItem('tipoDocumentoSiena');
+                localStorage.removeItem('entidad');
             }
+
+
 
             // Tira valores dentro de la tabla localStorage  
             this.localStorageData = {};
@@ -244,7 +241,7 @@ export default {
             }
 
         },
-        guardarBaseFIrma() {
+        guardarBaseFirma() {
             const altasFirma = {
                 Referencia: this.referencia,
                 Firmante: this.firmante,
@@ -253,26 +250,27 @@ export default {
                 AsociaUnicoItem: this.buttonAsociaUnicoItem,
                 Entidad: this.entidad,
                 TipoDocumentoSiena: this.tipoDocumentoSiena,
-
+                DataTime: this.currentDate,
 
             }
             const altaFirmasPadre = {
-                Referencia: this.referencia,
-                Firmante: this.firmante,
-                TipoProceso: this.TipoAlta,
+                referencia: this.referencia,
+                firmante: this.firmante,
+                tipoProceso: this.TipoAlta,
                 Usuario: this.usuario,
-                EstadoLote: this.estadoLote,
+                estadoLote: this.estadoLote,
+                DataTime: this.currentDate,
             }
+            axios.post("https://localhost:5001/api/AltaPadre", altaFirmasPadre).then(response => {
+                console.log(response);
+            }).catch(error => {
+                console.error(error);
+            });
             axios.post("https://localhost:5001/api/GDE_Firma", altasFirma).then(response => {
                 console.log(response);
             }).catch(error => {
                 console.error(error);
             });
-            axios.post("https://localhost:5001/api/ExpedientesGDEPadre", altaFirmasPadre).then(response => {
-                console.log(response);
-            }).catch(error => {
-                console.error(error);
-            })
         }
     },
 
@@ -644,18 +642,24 @@ export default {
     background-color: #39b3ff;
     width: 300px;
     height: 40px;
-    border-radius: 5px;
+    border-radius: 1px;
     border: none;
+}
+
+#divTablaAltaProcesoMasivoDeFirma {
+    display: flex;
+    margin: auto;
 }
 
 /* tabla reactiva */
 #divTablaAltaProcesoMasivoDeFirma table {
+    margin: auto;
     width: fit-content;
     display: flex;
     margin-bottom: 100px;
     border: solid 1px rgb(113, 112, 112);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
 }
 
 
@@ -666,7 +670,7 @@ export default {
 }
 
 tr #headerTabla {
-    background-color: #65b2e2;
+    background-color: #1597e8;
     border: 1px solid gray;
     width: 100%;
     height: 100%;

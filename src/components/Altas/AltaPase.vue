@@ -133,7 +133,7 @@
       <!-- Botones de accion con ese nuevo proceso -->
       <div class="container_btn_Proceso_Pase" id="">
          <button class="Cancelar_Proceso_Pase btn btn-danger" id="">X Cancelar </button>
-         <button class="Procesar_Proceso_Pase btn btn-primary" id=""> Procesar </button>
+         <button class="Procesar_Proceso_Pase btn btn-primary" id="" @click="guardarBasePase"> Procesar </button>
          <button class="Guardar_Proceso_Pase btn btn-success" id=""> Guardar </button>
       </div>
    </div>
@@ -141,6 +141,7 @@
 
 <script>
 import moment from 'moment';
+import axios from 'axios';
 export default {
    name: 'AltaPase',
    data() {
@@ -174,9 +175,35 @@ export default {
       },
       toggleClassAsociacionUnicaEEPase() {
          this.addedClassAsociacionUnicaEEPase = this.addedClassAsociacionUnicaEEPase === 'active' ? '' : 'active'
-      }
+      },
+      guardarBasePase() {
+         const altasFirma = {
+            Referencia: this.referencia,
+            Firmante: this.firmante,
+            TipoDocumento: this.tipoDocumento,
+            PermiteAsociacion: this.buttonPerimteAsociacion,
+            AsociaUnicoItem: this.buttonAsociaUnicoItem,
+            Entidad: this.entidad,
+            TipoDocumentoSiena: this.tipoDocumentoSiena,
 
+
+         }
+         // const altaFirmasPadre = {
+         //    Referencia: this.referencia,
+         //    Firmante: this.firmante,
+         //    TipoProceso: this.TipoAlta,
+         //    Usuario: this.usuario,
+         //    EstadoLote: this.estadoLote,
+         // }
+         axios.post("https://localhost:5001/api/GDE_Pase", altasFirma).then(response => {
+            console.log(response);
+         }).catch(error => {
+            console.error(error);
+         });
+
+      }
    },
+
    computed: {
       fechaFormatada() {
          return this.fecha.toLocaleString();
