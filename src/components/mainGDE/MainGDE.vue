@@ -1,82 +1,3 @@
-<script>
-
-import AltaCaratulacion from '../Altas/AltaCaratulacion.vue'
-import AltaFirma from '../Altas/AltaFirma.vue'
-import AltaPase from '../Altas/AltaPase.vue'
-import AltaVinculacion from '../Altas/AltaVinculacion.vue'
-import axios from 'axios';
-
-
-
-export default {
-
-    name: 'MainGDE',
-    components: {
-        AltaCaratulacion,
-        AltaFirma,
-        AltaPase,
-        AltaVinculacion,
-
-    },
-    data() {
-        return {
-            selectedOption: '',
-            showComponent: false,
-            currentPage: 1,
-            perPage: 5,
-            datos: [],
-        }
-    },
-    computed: {
-        totalPages() {
-            return Math.ceil(this.datos.length / this.perPage);
-        },
-        paginatedData() {
-            const start = (this.currentPage - 1) * this.perPage;
-            const end = start + this.perPage;
-            return this.datos.slice(start, end);
-        },
-    },
-    methods: {
-        changePage(offset) {
-            if (!this.datos.length) {
-                return;
-            }
-            if (this.currentPage === 1 && offset === -1) {
-                return;
-            }
-            this.currentPage += offset;
-            if (this.currentPage > this.totalPages) {
-                this.currentPage = this.totalPages;
-            }
-        },
-
-
-        goToFirstPage() {
-            this.currentPage = 1;
-        },
-        goToLastPage() {
-            this.currentPage = this.totalPages;
-        },
-    },
-    created() {
-        axios.get('https://localhost:5001/api/AltaPadre')
-            .then(response => {
-                this.datos = response.data;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    },
-};
-
-
-
-
-
-
-</script>
-
 <template>
     <div>
         <div class="ltProceso">
@@ -95,8 +16,8 @@ export default {
                     </div>
                     <div class="btn_Filtros">
                         <button id="btn_filtrado" class="btn btn-secondary">Filtrar</button>
-                        <button id="btn_Alta" class="btn btn-success" v-bind:showComponent="showComponent"
-                            @click="showComponent = !showComponent">Alta</button>
+                        <!-- ACAAAA -->
+                        <button id="btn_Alta" class="btn btn-success" @click="showSelectedProcess">Alta</button>
                     </div>
                 </div>
                 <hr style="width: 95%; margin:auto;">
@@ -107,7 +28,6 @@ export default {
                         <div class="btn-group" role="group" style="margin:0px 20px ;">
                             <label for="">Tipo Proceso: ></label>
                             <select name="cbxProceso" id="cbxProceso" v-model="selectedOption">
-
                                 <option value="">Seleccionar...</option>
                                 <option value="Caratulacion">Caratulacion EE</option>
                                 <option value="Firma">Firma</option>
@@ -179,316 +99,87 @@ export default {
                         </tr>
                     </tbody>
                 </table>
-
-
             </div>
         </div>
-
         <div>
-            <AltaCaratulacion v-if="showComponent && selectedOption === 'Caratulacion'"></AltaCaratulacion>
-            <AltaFirma v-if="showComponent && selectedOption === 'Firma'"></AltaFirma>
-            <AltaPase v-if="showComponent && selectedOption === 'Pase'"></AltaPase>
-            <AltaVinculacion v-if="showComponent && selectedOption === 'Vinculacion'"></AltaVinculacion>
+            <AltaCaratulacion v-if="processToShow === 'Caratulacion'"></AltaCaratulacion>
+            <AltaFirma v-if="processToShow === 'Firma'"></AltaFirma>
+            <AltaPase v-if="processToShow === 'Pase'"></AltaPase>
+            <AltaVinculacion v-if="processToShow === 'Vinculacion'"></AltaVinculacion>
         </div>
     </div>
 </template>
 
+<script>
+import AltaCaratulacion from '../Altas/AltaCaratulacion/AltaCaratulacion.vue'
+import AltaFirma from '../Altas/AltaFirma/AltaFirma.vue'
+import AltaPase from '../Altas/AltaPase/AltaPase.vue'
+import AltaVinculacion from '../Altas/AltaVinculacion/AltaVinculacion.vue'
+import axios from 'axios';
+import './styles.css';
 
-<style lang="css" scoped>
-button {
-    border: 1px solid;
-}
+export default {
 
-.container_procesosFirmaMasiva {
+    name: 'MainGDE',
+    components: {
+        AltaCaratulacion,
+        AltaFirma,
+        AltaPase,
+        AltaVinculacion,
 
-    background-color: rgb(181, 178, 178);
-    height: 100%;
-    width: 100%;
-    margin: auto;
-    overflow: hidden;
-
-}
-
-.ltProceso {
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
-.title {
-    text-align: center;
-    margin: 50px;
-}
-
-.apartado-btn_ProcesosMasivos {
-    width: 98%;
-    background-color: rgb(242, 240, 240);
-    margin: auto;
-    border-radius: 5px;
-}
-
-.btn_ProcesosMasivos {
-    display: flex;
-    border: none;
-    height: 50px;
-    padding-top: 15px;
-    margin-left: 10px;
-
-}
-
-#linkHome {
-    text-decoration: none;
-    color: black;
-}
-
-/* filtros   container */
-.container_Filtros {
-    margin: auto;
-    width: 98%;
-    background-color: rgb(242, 240, 240);
-    border-radius: 5px;
-}
-
-.filtros_Proceso {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding: 10px;
-}
-
-/* seteo de filtros */
-.container_SeteoFiltros {
-    display: block;
-    margin-top: 30px;
-}
-
-.Filtro_masivo {
-    margin-left: 50px;
-    margin-bottom: 20px;
-}
-
-.Filtro_masivo select {
-    text-align: left;
-    margin-left: 5px;
-    width: 150px;
-    height: 28px;
-    margin-top: -5px;
-}
-
-
-
-/* botones filtros */
-
-.div_InputsFiltro {
-    margin-left: 30px;
-}
-
-.btn_Filtros {
-    margin-right: 70PX;
-}
-
-#btn_filtrado {
-    color: white;
-
-    border: none;
-    width: 50px;
-    padding: 5px;
-    margin-right: 60px;
-}
-
-#btn_Alta {
-    color: white;
-
-    border: none;
-    padding: 5px;
-    width: 70px;
-
-}
-
-#Input_filtro-1 {
-    height: 25px;
-}
-
-#Input_filtro-2 {
-    height: 25px;
-}
-
-/* segundo apartado filtro */
-.container_btn_Filtro {
-    display: flex;
-    justify-content: end;
-    margin-right: 20px;
-}
-
-.container_btn_Filtro button {
-    margin-left: 10px;
-    margin-bottom: 20px;
-}
-
-#btn_filtroAplicar {
-    border: none;
-    padding: 3px;
-}
-
-#btn_filtroCancelar {
-    padding: 3px;
-}
-
-/* encabezado filtro tabla */
-.container_dataFiltro {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-._dataFiltro {
-    color: gray;
-}
-
-.btn_dataFiltro {
-    display: flex;
-    margin: 10px;
-}
-
-.btn_dataFiltro button {
-    border: none;
-    color: #37bbed;
-    font-size: 1.3rem;
-    margin: 0 20px;
-}
-
-.btn_dataFiltro p {
-    margin: 0 5px;
-    color: gray;
-}
-
-/* Output Data tabla */
-.OutDataContainer {
-    width: 98%;
-    margin: auto;
-    background-color: rgb(242, 240, 240);
-    margin-top: 15px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    border: #7b7b7b solid 1px;
-    border-radius: 10px;
-}
-
-.OutDataContainer.SacarApartadoOutputData {
-    display: none;
-}
-
-.tftable {
-    font-size: 12px;
-    color: #333333;
-    width: 96%;
-    border-width: 1px;
-    border-color: #7b7b7b;
-    border-collapse: collapse;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.tftable th {
-    font-size: 12px;
-    background-color: #0072bb;
-    border-width: 1px;
-    padding: 8px;
-    border-style: solid;
-    border-color: #729ea5;
-    text-align: left;
-}
-
-.tftable tr {
-    background-color: #fdfdfd;
-    height: 50px;
-}
-
-.tftable td {
-    font-size: 12px;
-    padding: 8px;
-    height: 30px;
-}
-
-.tr_impar {
-    background-color: #37bced3c !important;
-}
-
-.tftable tr:hover {
-    background-color: #ffffff;
-}
-
-
-/* btn Accion form */
-.btn_accion {
-    display: flex;
-    width: 70px;
-    margin: auto;
-    margin-left: 20px;
-    justify-content: space-between;
-
-}
-
-.btn_accion button {
-    height: 35px;
-    max-width: 50px;
-    margin-left: 5px;
-}
-
-.btn_ver {
-    background-color: #0072bb;
-    border-radius: 5px;
-    border: none;
-    padding: 10px;
-    font-size: large;
-}
-
-.btn_editar {
-    margin-bottom: 5px;
-    padding: 10px;
-    border-radius: 25%;
-    border: none;
-    background: rgba(17, 123, 245, 1.0);
-    background: -webkit-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-    background: -moz-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-    background: linear-gradient(to top, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-    ;
-}
-
-.btn_Firma {
-    border-radius: 45%;
-    border: none;
-    background-color: #204aa3;
-    padding: 10px;
-}
-
-/* Mediaquery Form */
-@media screen and (max-width: 1400px) {
-    .btn_accion {
-        width: 70px;
-
-    }
-
-    .btn_accion button {
-        height: 35px;
-        width: 35px;
-        margin-left: 3px !important;
-        margin: auto;
-
-    }
-
-    .btn_accion svg {
-        width: 20px;
-    }
-
-}
-
-@media screen and (max-width: 1000px) {
-    .btn_accion {
-        width: 80px !important;
-        margin-right: 10px;
-    }
-}
-</style>
-
+    },
+    data() {
+        return {
+            selectedOption: '',
+            processToShow: '',
+            currentPage: 1,
+            perPage: 5,
+            datos: [],
+        }
+    },
+    computed: {
+        totalPages() {
+            return Math.ceil(this.datos.length / this.perPage);
+        },
+        paginatedData() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.datos.slice(start, end);
+        },
+    },
+    methods: {
+        showSelectedProcess() {
+            if (this.selectedOption !== '') {
+                this.processToShow = this.selectedOption
+            }
+        },
+        changePage(offset) {
+            if (!this.datos.length) {
+                return;
+            }
+            if (this.currentPage === 1 && offset === -1) {
+                return;
+            }
+            this.currentPage += offset;
+            if (this.currentPage > this.totalPages) {
+                this.currentPage = this.totalPages;
+            }
+        },
+        goToFirstPage() {
+            this.currentPage = 1;
+        },
+        goToLastPage() {
+            this.currentPage = this.totalPages;
+        },
+    },
+    created() {
+        axios.get('https://localhost:5001/api/AltaPadre')
+            .then(response => {
+                this.datos = response.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    },
+};
+</script>
