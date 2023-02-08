@@ -198,34 +198,20 @@ export default {
 
         // localstorage
         guardarTipo() {
-            if (!this.referencia || !this.firmante || !this.tipoDocumento) {
-                alert("Los campos de referencia, firmante y tipo de documento son obligatorios");
-                return;
-            }
-            localStorage.setItem("referencia", this.referencia);
-            localStorage.setItem("firmante", this.firmante);
-            localStorage.setItem("tipo_documento", this.tipoDocumento);
-            if (this.buttonPerimteAsociacion) {
-                localStorage.setItem('buttonPerimteAsociacion', this.buttonPerimteAsociacion);
-            } else {
-                localStorage.removeItem('buttonPerimteAsociacion');
-            }
-            if (this.buttonAsociaUnicoItem) {
-                localStorage.setItem('buttonAsociaUnicoItem', JSON.stringify(this.buttonAsociaUnicoItem));
-                localStorage.setItem("entidad", this.entidad);
-                localStorage.setItem("tipoDocumentoSiena", this.tipoDocumentoSiena);
-            } else {
-                localStorage.removeItem('buttonAsociaUnicoItem');
-                localStorage.removeItem('tipoDocumentoSiena');
-                localStorage.removeItem('entidad');
+            const altaFirma = {
+                Referencia: this.referencia,
+                Firmante: this.firmante,
+                TipoDocumento: this.tipoDocumento,
+                PermiteAsociacion: this.buttonPerimteAsociacion,
+                AsociaUnicoItem: this.buttonAsociaUnicoItem,
+                Entidad: this.entidad,
+                TipoDocumentoSiena: this.tipoDocumentoSiena,
+                DataTime: this.currentDate,
             }
 
+
             // Tira valores dentro de la tabla localStorage  
-            this.localStorageData = {};
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                this.localStorageData[key] = localStorage.getItem(key);
-            }
+            localStorage.setItem('AltaFirma', JSON.stringify(altaFirma))
         },
         guardarBaseFirma() {
             const altasFirma = {
