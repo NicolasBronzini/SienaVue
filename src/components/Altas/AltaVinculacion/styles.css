@@ -433,41 +433,6 @@
    border: none;
 }
 
-/* tabla reactiva */
-#divTablaAltaProcesoMasivoDeFirma table {
-   width: fit-content;
-   display: flex;
-   margin-bottom: 100px;
-   border: solid 1px rgb(113, 112, 112);
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
-}
-
-
-#divTablaAltaProcesoMasivoDeFirma table tr td {
-   display: block;
-
-
-}
-
-tr #headerTabla {
-   background-color: #65b2e2;
-   border: 1px solid gray;
-   width: 100%;
-   height: 100%;
-   padding: 10px;
-
-}
-
-tr #tablavalue {
-   background-color: #ffffff;
-   border: 1px solid rgba(128, 128, 128, 0.448);
-   width: 100%;
-   height: 50px;
-   padding: 10px;
-
-}
-
 /* media querys */
 @media screen and (max-width: 1400px) {
    .container_Inputs_Entrada_Data_Vincular {

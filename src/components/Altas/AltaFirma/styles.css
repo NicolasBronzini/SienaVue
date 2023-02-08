@@ -11,7 +11,6 @@
   margin-bottom: 400px;
 }
 
-
 .Encabezado_Alta_Expediente_Firma {
   display: flex;
   justify-content: space-between;
@@ -28,27 +27,32 @@
 
 .Referencia_Proceso_Firma_Expedientes p span {
   color: black;
-
 }
 
 /* inputs y buttons referencias y datos de nuevo expediente */
 .container_Inputs_Entrada_Data_Firmante {
   display: flex;
-  justify-content: space-around;
-  margin: auto;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
 }
 
 .div_Inputs_Entrada_Data_Firmante {
-  max-width: 30%;
-  margin: 0 20px 0 50px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.div_Inputs_Entrada_Data_Firmante p {
+.div_Inputs_Entrada_Data_Firmante label {
   font-size: 1.2rem;
   color: gray;
-
 }
 
+/* 
 .div_Inputs_Entrada_Data_Firmante select {
   width: 100% !important;
   text-align: start;
@@ -56,15 +60,13 @@
 
 .div_Inputs_Entrada_Data_Firmante input {
   width: 100% !important;
-}
+} */
 
 .grupo_Entrada_Data_Firma {
   margin-top: -10px;
-
   text-align: start;
   height: 40px;
   width: 100% !important;
-
 }
 
 .Inputs_btnAsocia_Unico_Item {
@@ -97,7 +99,6 @@
 }
 
 /* Permite Asociacion */
-
 /* Input Entidad al Asociar Unico Item */
 
 #div_InputTipoDocumentoSIENA {
@@ -108,31 +109,26 @@
 
 #div_InputTipoDocumentoSIENA.active {
   display: block;
-
   width: 300px;
   margin: auto;
 }
 
 #InputActiveEntidad {
   display: none;
-
 }
 
 #InputActiveEntidad.active {
   display: block;
-
 }
 
 #TipoDocumentoSiena {
   width: 300px;
-
 }
 
 .container_Permite_Asociacion_Firma {
   display: flex;
-  justify-content: space-between;
-  margin: auto;
-  margin: 50px 100px 0px 200px;
+  justify-content: space-around;
+  gap: 30px;
 }
 
 .reactive#UbicacionPath2 {
@@ -143,11 +139,11 @@
   display: none;
 }
 
-#UbicacionPath {
+/* #UbicacionPath {
   margin-left: 100px;
   margin-top: 40px;
   display: none;
-}
+} */
 
 .reactive#UbicacionPath.active {
   display: block;
@@ -160,17 +156,7 @@
 .div_Permite_Asociacion_Firma button {
   background-color: #65b2e2;
   border: none;
-  padding: 10px 50px 10px 0px;
   color: white;
-}
-
-.div_Permite_Asociacion_Firma2 {
-  margin-top: -20px;
-}
-
-.div_Permite_Asociacion_Firma2 button {
-  margin: -5px 0px;
-  border: none;
 }
 
 /*---------------------------------- Switch------------------------------- */
@@ -179,14 +165,12 @@
   background: -webkit-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: -moz-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: linear-gradient(to top, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-  ;
   border: none;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
   display: flex;
   outline: none;
-
 }
 
 .Swich_Asociacion::after {
@@ -202,7 +186,6 @@
   left: unset;
   border-radius: 3px;
   border: 1px solid rgba(150, 150, 150, 0.442);
-
 }
 
 .Swich_Asociacion span {
@@ -219,7 +202,6 @@
   background: -webkit-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: -moz-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: linear-gradient(to top, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-  ;
   color: black;
 }
 
@@ -235,16 +217,12 @@
   display: none;
   animation: fadeOut;
   animation-duration: 500ms;
-
-
 }
 
 .btn_Unico_Item.active {
   display: block;
   animation: fadeIn;
   animation-duration: 500ms;
-
-
 }
 
 .Swich_Item_Unico {
@@ -252,15 +230,12 @@
   background: -webkit-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: -moz-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: linear-gradient(to top, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-  ;
   border: none;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
   display: flex;
   outline: none;
-
-
 }
 
 .Swich_Item_Unico::after {
@@ -292,8 +267,6 @@
   background: -webkit-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: -moz-linear-gradient(bottom, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
   background: linear-gradient(to top, rgba(17, 123, 245, 1.0), rgba(100, 159, 205, 1.0));
-  ;
-
   color: black;
 }
 
@@ -301,7 +274,6 @@
   right: unset;
   left: 0;
   content: "No";
-
 }
 
 /* -----------------------------------Fin Switch------------------------------------------------------------ */
@@ -313,7 +285,6 @@
   background-color: #39b3ff;
   width: 98%;
   margin: auto;
-
   margin-top: 40px;
 }
 
@@ -321,7 +292,6 @@
   margin-left: 20px;
   margin-right: 20px;
   padding-top: 10px;
-
 }
 
 /* Botones de accion con ese nuevo proceso */
@@ -333,12 +303,10 @@
   margin-top: 50px;
   margin-bottom: 30px;
   bottom: 0px;
-
 }
 
 .container_btn_Proceso_Firma.active {
   transform: initial;
-
 }
 
 .Cancelar_Proceso_Firma {
@@ -365,68 +333,42 @@
   border: none;
 }
 
+/* tabla reactiva */
 #divTablaAltaProcesoMasivoDeFirma {
   display: flex;
-  margin: auto;
+  justify-content: center;
 }
 
-/* tabla reactiva */
-#divTablaAltaProcesoMasivoDeFirma table {
-  margin: auto;
-  width: fit-content;
-  display: flex;
-  margin-bottom: 100px;
-  border: solid 1px rgb(113, 112, 112);
-  border-top-left-radius: 1px;
-  border-top-right-radius: 1px;
+#divTablaAltaProcesoMasivoDeFirma table,
+#divTablaAltaProcesoMasivoDeFirma tr,
+#divTablaAltaProcesoMasivoDeFirma th {
+  padding: 4px;
+  border: 1px solid black;
 }
 
-
-#divTablaAltaProcesoMasivoDeFirma table tr td {
-  display: block;
-
-
-}
-
-tr #headerTabla {
-  background-color: #1597e8;
-  border: 1px solid gray;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-
-}
-
-tr #tablavalue {
-  background-color: #ffffff;
-  border: 1px solid rgba(128, 128, 128, 0.448);
-  width: 100%;
-  height: 50px;
-  padding: 10px;
-
+#divTablaAltaProcesoMasivoDeFirma .table-values {
+  font-weight: normal;
 }
 
 /* media querys */
 @media screen and (max-width: 1400px) {
   .container_Inputs_Entrada_Data_Firmante {
-      display: flex;
-      justify-content: space-around;
-      margin: auto;
-      margin-right: 50px;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    margin-right: 50px;
   }
 
   .div_Inputs_Entrada_Data_Firmante {
-      width: 200px;
-      margin: 0 20px 0 50px;
+    width: 200px;
+    margin: 0 20px 0 50px;
   }
 
   .div_Inputs_Entrada_Data_Firmante input {
-      width: 300px;
+    width: 300px;
   }
 
   .grupo_Entrada_Data_Firma {
-      width: 100%;
-
+    width: 100%;
   }
-
 }
