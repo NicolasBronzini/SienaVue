@@ -207,7 +207,7 @@ export default {
                 { header: 'Entidad', value: this.entidad },
                 { header: 'Tipo de Documento Siena', value: this.tipoDocumentoSiena }
             ]
-
+            // hola
             this.altaFirmaDatos = altaFirmaDatos
             this.showTable = true
         },
