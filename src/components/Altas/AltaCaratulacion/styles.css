@@ -377,21 +377,19 @@
 /* tabla reactiva */
 #divTablaAltaProcesoMasivoDeFirma table {
   width: fit-content;
-  display: flex;
+  display: block !important;
   margin-bottom: 100px;
   border: solid 1px rgb(113, 112, 112);
   border-top-left-radius: 1px;
   border-top-right-radius: 1px;
 }
 
-#divTablaAltaProcesoMasivoDeFirma table tr td {
-  display: block;
-}
+
 
 tr #headerTabla {
   background-color: #1597e8;
   border: 1px solid gray;
-  width: 100%;
+  width: 100px;
   height: 100%;
   padding: 10px;
 }
@@ -407,19 +405,19 @@ tr #tablavalue {
 /* media querys */
 @media screen and (max-width: 1400px) {
   .container_Inputs_Entrada_Data_Caratulacion {
-     display: flex;
-     justify-content: space-around;
-     margin: auto;
-     margin-right: 50px;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    margin-right: 50px;
   }
 
   .div_Inputs_Entrada_Data_Caratulacion {
-     width: 200px;
-     margin: 0 20px 0 50px;
+    width: 200px;
+    margin: 0 20px 0 50px;
   }
 
   .div_Inputs_Entrada_Data_Caratulacion input {
-     width: 300px;
+    width: 300px;
   }
 }
 
@@ -488,4 +486,3 @@ tr #tablavalue {
 .Output_Cuadricula_Motivo_Interno_Caratulacion {
   height: 250px;
 }
-
