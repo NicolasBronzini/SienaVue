@@ -2,39 +2,34 @@
     <!-- Este va a ser el apartado de pase -->
 
     <!-- Apartado alta de Firma de EE -->
-    <div class="Alta_Expedientes_Firma_Conteiner" id="Container_total_Firma">
-        <!-- encabezado y fecha -->
-        <div class="Encabezado_Alta_Expediente_Firma">
+    <section class="Alta_Expedientes_Firma_Conteiner" id="Container_total_Firma">
+        <header class="Encabezado_Alta_Expediente_Firma">
             <span id="tituloModificarOption" style="font-size:1.4rem;">ALTA PROCESO MASIVO DE FIRMA</span>
             <p>fecha: {{ currentDate }}</p>
-        </div>
-        <!-- referencias de proceso -->
-        <div class="Referencia_Proceso_Firma_Expedientes">
+        </header>
+
+        <section class="Referencia_Proceso_Firma_Expedientes">
             <p>Nro. Lote</p>
-            <p>Estado <span> <strong>Pendiente</strong> </span> </p>
+            <p>Estado <span><strong>Pendiente</strong></span></p>
             <p>Usuario <span> <strong> Apellido/s y Nombre/s</strong></span></p>
-            <p>Tipo Proceso <span> <strong> Firma</strong></span> </p>
-        </div>
-        <!-- inputs de seleccion de referencia para generar expediente -->
-        <div class="container_Inputs_Entrada_Data_Firmante">
-            <!-- Input Referencia -->
-            <div class="div_Inputs_Entrada_Data_Firmante form-control">
-                <p>Referencia</p>
-                <input type="text" class="grupo_Entrada_Data_Firma" style="max-width: 500px; height: 40px;"
-                    id="referencia_alta_proceso_masivo_firma" v-model="referencia" />
+            <p>Tipo Proceso <span><strong> Firma</strong></span></p>
+        </section>
+
+        <form class="container_Inputs_Entrada_Data_Firmante">
+            <div class="div_Inputs_Entrada_Data_Firmante">
+                <label>Referencia</label>
+                <input class="grupo_Entrada_Data_Firma" type="text" id="referencia_alta_proceso_masivo_firma"
+                    v-model="referencia" />
             </div>
-            <!-- Firmante -->
-            <div class="div_Inputs_Entrada_Data_Firmante form-control">
-                <p> Firmante</p>
-                <div class=" grupo_Entrada_Data_Firma " role="group">
-                    <!-- Chequear su existencia en GDE. Selección única -->
-                    <input type="text" style="max-width: 500px; height: 40px;" id="firmante_alta_proceso_masivo_firma"
-                        v-model="firmante" />
-                </div>
+            <div class="div_Inputs_Entrada_Data_Firmante">
+                <label>Firmante</label>
+                <!-- Chequear su existencia en GDE. Selección única -->
+                <input type="text" style="max-width: 500px; height: 40px;" id="firmante_alta_proceso_masivo_firma"
+                    v-model="firmante" />
             </div>
             <!--Button Tipo de Documento  -->
-            <div class="div_Inputs_Entrada_Data_Firmante form-control">
-                <p>Tipo de Documento</p>
+            <div class="div_Inputs_Entrada_Data_Firmante">
+                <label>Tipo de Documento</label>
                 <div class="btn-group grupo_Entrada_Data_Firma" role="group">
                     <select class="selectDataAlta" name="Seleccionar" id="tipoDeDocumento_alta_proceso_masivo_firma"
                         v-model="tipoDocumento">
@@ -46,16 +41,30 @@
                     </select>
                 </div>
             </div>
-        </div>
+        </form>
+
         <!-- ubicacion Phath:     permite asociacion -->
         <div
             class="container_Permite_Asociacion_Firma container_Permite_Asociacion_Firma2  animate__animated animate__fadeIn">
-            <div class="div_Permite_Asociacion_Firma" id="UbicacionPath2">
+            <!-- <div class="div_Permite_Asociacion_Firma" id="UbicacionPath2">
                 <button id="path_alta_proceso_masivo_firma">+ Ubicacion</button> Path:
-            </div>
-
+            </div> -->
             <!-- SWITCH -->
 
+            <div class="div_Permite_Asociacion_Firma2">
+                <p>¿Permite Asociación?</p>
+                <button class="Swich_Asociacion" id="SwichAsociacion" @click="toggleClassAsociacionFirma"
+                    :class="addedClassAsociacionFirma">
+                    <span>No</span>
+                    <span>Si</span>
+                </button>
+            </div>
+            <div class="div_Permite_Asociacion_Firma2 btn_Unico_Item "
+                v-bind:class="addedClassAsociacionUnicoItemContainerFirma">
+                <p>¿Asocia a único item?</p>
+                <button class="Swich_Item_Unico" id="SwichItemUnico" @click="toggleClassAsociaUnicoItem"
+                    v-bind:class="addedClassAsociaUnicoItem"><span>No</span><span>Si</span></button>
+            </div>
             <div class="div_Permite_Asociacion_Firma Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control "
                 id="InputActiveEntidad" v-bind:class="addedClassSelectContainerEntidad">
                 <p>Entidad</p>
@@ -72,32 +81,22 @@
                     </select>
                 </div>
             </div>
-            <div class="div_Permite_Asociacion_Firma2 btn_Unico_Item "
-                v-bind:class="addedClassAsociacionUnicoItemContainerFirma">
-                <p>¿Asocia a único item?</p>
-                <button class="Swich_Item_Unico" id="SwichItemUnico" @click="toggleClassAsociaUnicoItem"
-                    v-bind:class="addedClassAsociaUnicoItem"><span>No</span><span>Si</span></button>
-            </div>
-            <div class="div_Permite_Asociacion_Firma2">
-                <p>¿Permite Asociación?</p>
-                <button class="Swich_Asociacion" id="SwichAsociacion" @click="toggleClassAsociacionFirma"
-                    v-bind:class="addedClassAsociacionFirma"><span>No</span><span>Si</span></button>
+            <div class="div_Inputs_Entrada_Data_Firmante Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control"
+                id="div_InputTipoDocumentoSIENA" v-bind:class="addedClassTipoDocumentoSiena">
+                <p>Tipo de documento SIENA</p>
+                <div class="btn-group grupo_Entrada_Data_Firma">
+                    <select class="select_Data_Alta" id="TipoDocumentoSiena" v-model="tipoDocumentoSiena">
+                        <option value="" selected hidden>Seleccionar...</option>
+                        <option value="IDCIN">IDCIN</option>
+                        <option value="IFGRA">IFGRA</option>
+                        <option value="CROQU">CROQU </option>
+                        <option value="FPCCA">FPCCA</option>
+                    </select>
+                </div>
             </div>
         </div>
         <!-- Tipo de docuemento SIENA -->
-        <div class="div_Inputs_Entrada_Data_Firmante Inputs_btnAsocia_Unico_Item animate__animated animate__fadeIn form-control"
-            id="div_InputTipoDocumentoSIENA" v-bind:class="addedClassTipoDocumentoSiena">
-            <p>Tipo de documento SIENA</p>
-            <div class="btn-group grupo_Entrada_Data_Firma">
-                <select class="select_Data_Alta" id="TipoDocumentoSiena" v-model="tipoDocumentoSiena">
-                    <option value="" selected hidden>Seleccionar...</option>
-                    <option value="IDCIN">IDCIN</option>
-                    <option value="IFGRA">IFGRA</option>
-                    <option value="CROQU">CROQU </option>
-                    <option value="FPCCA">FPCCA</option>
-                </select>
-            </div>
-        </div>
+
         <div class="div_Permite_Asociacion_Firma" id="UbicacionPath">
             <button>&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ubicacion</button> Path:
         </div>
@@ -111,13 +110,22 @@
         </div>
 
         <!-- tabla localstorage -->
-        <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px ;">
+        <div v-show="showTable" id="divTablaAltaProcesoMasivoDeFirma">
             <table>
-                <tr v-for="(value, key) in localStorageData" :key="key">
+                <!-- <tr v-for="(value, key) in localStorageData" :key="key">
                     <td id="headerTabla">{{ key }}</td>
                     <td id="tablavalue">{{ value }}</td>
+                </tr> -->
+                <tr>
+                    <th v-for="item in altaFirmaDatos" :key="item.header">
+                        {{ item.header }} // Falta logica para mostrar solo lo necesario
+                    </th>
                 </tr>
-
+                <tr>
+                    <th v-for="item in altaFirmaDatos" :key="item.header" class="table-values">
+                        {{ item.value }} // Falta logica para mostrar solo lo necesario
+                    </th>
+                </tr>
             </table>
         </div>
         <!-- Botones de accion con ese nuevo proceso -->
@@ -128,16 +136,8 @@
             <button class="Guardar_Proceso_Firma btn btn-success" id="btnGuardarFirma" @click="guardarTipo"> Guardar
             </button>
         </div>
-    </div>
-
-
-
-
-
-
+    </section>
 </template>
-
-
 
 
 <script>
@@ -169,14 +169,14 @@ export default {
             tipoDocumentoSiena: "",
             // personas: []
             // btn localstorage
-            buttonPerimteAsociacion: false,
+            buttonPermiteAsociacion: false,
             buttonAsociaUnicoItem: false,
 
-            // localsotagetable
-            localStorageData: null,
-
             //DataTime
-            currentDate: moment().format('YYYY-MM-DD')
+            currentDate: moment().format('YYYY-MM-DD'),
+
+            altaFirmaDatos: null,
+            showTable: false
         }
     },
     methods: {
@@ -185,7 +185,7 @@ export default {
             this.addedClassAsociacionFirma = this.addedClassAsociacionFirma === 'active' ? '' : 'active'
             this.addedClassAsociacionUnicoItemContainerFirma = this.addedClassAsociacionUnicoItemContainerFirma === 'active' ? '' : 'active'
             // btn localstorage
-            this.buttonPerimteAsociacion = !this.buttonPerimteAsociacion
+            this.buttonPermiteAsociacion = !this.buttonPermiteAsociacion
         },
         toggleClassAsociaUnicoItem() {
             this.addedClassSelectContainerEntidad = this.addedClassSelectContainerEntidad === 'active' ? '' : 'active'
@@ -198,27 +198,25 @@ export default {
 
         // localstorage
         guardarTipo() {
-            const altaFirma = {
-                Referencia: this.referencia,
-                Firmante: this.firmante,
-                TipoDocumento: this.tipoDocumento,
-                PermiteAsociacion: this.buttonPerimteAsociacion,
-                AsociaUnicoItem: this.buttonAsociaUnicoItem,
-                Entidad: this.entidad,
-                TipoDocumentoSiena: this.tipoDocumentoSiena,
-                DataTime: this.currentDate,
-            }
+            const altaFirmaDatos = [
+                { header: 'Referencia', value: this.referencia },
+                { header: 'Firmante', value: this.firmante },
+                { header: 'Tipo de Documento', value: this.tipoDocumento },
+                { header: '¿Permite Asociación?', value: this.buttonPermiteAsociacion },
+                { header: '¿Asocia a único item?', value: this.buttonAsociaUnicoItem },
+                { header: 'Entidad', value: this.entidad },
+                { header: 'Tipo de Documento Siena', value: this.tipoDocumentoSiena }
+            ]
 
-
-            // Tira valores dentro de la tabla localStorage  
-            localStorage.setItem('AltaFirma', JSON.stringify(altaFirma))
+            this.altaFirmaDatos = altaFirmaDatos
+            this.showTable = true
         },
         guardarBaseFirma() {
             const altasFirma = {
                 Referencia: this.referencia,
                 Firmante: this.firmante,
                 TipoDocumento: this.tipoDocumento,
-                PermiteAsociacion: this.buttonPerimteAsociacion,
+                PermiteAsociacion: this.buttonPermiteAsociacion,
                 AsociaUnicoItem: this.buttonAsociaUnicoItem,
                 Entidad: this.entidad,
                 TipoDocumentoSiena: this.tipoDocumentoSiena,
