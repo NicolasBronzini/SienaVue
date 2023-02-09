@@ -79,7 +79,7 @@
          </div>
          <div class="div_Permite_Asociacion_Caratulacion2" id="divContainerAsociacionUnicaEECaratulacion"
             v-bind:class="addedClassAsociacionUnicoEEContainerCaratulacion">
-            <p> <strong> ¿Asocia a un unico EE</strong></p>
+            <p> <strong> ¿Asocia a un unico EE?</strong></p>
             <button class="Swich_Asociacion" id="switchMotivoInternoEECaratulacion"
                @click="toggleClassAsociaUnicoEECaratulacion"
                v-bind:class="addedClassAsociaUnicoEECaratulacion"><span>No</span><span>Si</span></button>
@@ -107,10 +107,19 @@
       <!-- Apartado cruadricula Caratulacion -->
       <div class="container" id="divTablaAltaProcesoMasivoDeFirma" style="margin-top:50px;">
          <table>
-            <tr v-for="(value, key) in localStorageData" :key="key">
-               <td id="headerTabla">{{ key }}</td>
-               <td id="tablavalue">{{ value }}</td>
+
+            <tr>
+               <th v-for="item in altaCaratulacionDatos" :key="item.header" id='headerTabla'>
+                  {{ item.header }}
+               </th>
             </tr>
+
+            <tr>
+               <th v-for="item in altaCaratulacionDatos" :key="item.v4alue" id='tablavalue'>
+                  {{ item.value }}
+               </th>
+            </tr>
+
          </table>
       </div>
       <!-- Botones de accion con ese nuevo proceso -->
@@ -132,7 +141,8 @@ export default {
    name: 'AltaCaratulacion',
    data() {
       return {
-         showAltaProcesosMasivos: false,
+
+
 
          //tipo ALTa
          TipoAlta: 'Caratulacion Masiva',
@@ -165,9 +175,8 @@ export default {
          buttonAsociaUnicoEECaratulacion: false,
          buttonAMotivoInternoCaratulacion: false,
 
-         // localsotagetable
-         localStorageData: null,
-
+         altaCaratulacionDatos: null,
+         showTable: false,
          //DataTime
          currentDate: moment().format('YYYY-MM-DD')
       }
@@ -208,21 +217,19 @@ export default {
 
       // localstorage
       guardarCaratulacion() {
-         const altaCaratulacion = {
-            botonTrataUnica: this.buttonTrataUnicaCaratulacion,
-            botonAsociaExpediente: this.buttonAsociaExpedienteCaratulacion,
-            botonAsociaSiena: this.buttonAsociaSienaCaratulacion,
-            botonAsociaUnico: this.buttonAsociaUnicoEECaratulacion,
-            botonMotivoInterno: this.buttonAMotivoInternoCaratulacion,
-            referencia:  this.referenciaCaratulacion,
-            firmante: this.firmanteCaratulacion,
-            tipoDocumento: this.tipoDocumentoCaratulacion,
-            trata: this.trataCaratulacion,
-         }
-
-         localStorage.setItem('AltaCaratulacion', JSON.stringify(altaCaratulacion))
-
-         // TODO: mostrar tabla
+         const altaCaratulacionDatos = [
+            { header: 'Referencia', value: this.referenciaCaratulacion, },
+            { header: 'Firmante', value: this.firmanteCaratulacion, },
+            { header: 'Tipo Documento', value: this.tipoDocumentoCaratulacion, },
+            { header: 'Trata Unica', value: this.buttonTrataUnicaCaratulacion, },
+            { header: 'Asocia Expediente', value: this.buttonAsociaExpedienteCaratulacion, },
+            { header: 'Requiere Asociación SIENA', value: this.buttonAsociaSienaCaratulacion, },
+            { header: 'Asocia a un unico EE', value: this.buttonAsociaUnicoEECaratulacion, },
+            { header: 'Motivo Interno y Descripción Adicional del tramite coinciden ', value: this.buttonAMotivoInternoCaratulacion, },
+            { header: 'Trata', value: this.trataCaratulacion, },
+         ]
+         this.altaCaratulacionDatos = altaCaratulacionDatos;
+         this.showTable = true;
       },
       guardarBaseCaratulacion() {
          const altasCaratulacion = {
@@ -264,4 +271,3 @@ export default {
    }
 }
 </script>
-
